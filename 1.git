@@ -1,0 +1,60 @@
+DAY-01: INTRO, BASIC COMMANDS
+
+STAGES OF GIT:
+
+1. WORKING DIRECTORY: we write the source code.
+2. STAGING AREA: We can track the code. is also called as draft space.
+3. REPO: we can store our tracked code. (.git is your local repo)
+
+
+CREATE A SERVER
+INSTALLATION:
+
+mkdir swiggy  (mkdir is to create a folder)
+cd swiggy  (cd is to go inside folder)
+yum install git -y
+git init  (to get .git folder)
+
+
+touch file2	: create a file
+git status	: to check the file is tracking or not
+git add file2	: to track the file2
+git commit -m "abc" file2: to store the tracked file2
+git log		: to show the commits 
+git log --oneline : to show the commits on single line
+
+HISTORY:
+
+  1  ll
+    2  mkdir swiggy
+    3  cd swiggy/
+    4  yum install git -y
+    5  ll
+    6  ll -a
+    7  git init
+    8  ll -a
+    9  vim file1
+   10  ll
+   11  git status
+   12  git add file1
+   13  git status
+   14  git commit -m "commit-1" file1
+   15  git status
+   16  touch file2
+   17  git status
+   18  git add file2
+   19  git status
+   20  git commit -m "commit-2" file2
+   21  git status
+   22  ll
+   23  git log
+   24  git log --oneline
+   25  touch file3
+   26  git status
+   27  git add file3
+   28  git status
+   29  git commit -m "commit-3" file3
+   30  git log
+   31  history
+
+=================================================
