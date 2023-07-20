@@ -1,3 +1,4 @@
+
 DAY-01: INTRO, BASIC COMMANDS
 
 STAGES OF GIT:
@@ -58,3 +59,104 @@ HISTORY:
    31  history
 
 =================================================
+
+DAY-02: BRANCHES, MERGE REBASE
+
+BRANCH:
+Branch means an individual line of development.
+we can develop the code separately.
+Each feature on the application was initially developed on an individual branch only.
+the default branch is master.
+we need to do initial commit for the master branch.
+
+
+COMMANDS:
+
+git branch		: to list the branches
+git branch branch_name	: to create the branch
+git checkout branch_name: to switch to another branch
+git checkout -b branch_name: to create and switch at same time
+git branch -D branch_name: to delete the branch
+git branch -m old new 	: to rename a branch
+
+MERGE: add files in one branch to another branch.
+
+git checkout master
+git merge photos
+
+REBASE: add files in one branch to another branch.
+
+git checkout master
+git rebase photos
+
+HISTORY:
+ 1  mkdir swiggy
+    2  cd swiggy/
+    3  yum install git -y
+    4  ll -a
+    5  git init
+    6  ll -a
+    7  git branch
+    8  touch index.html
+    9  git status
+   10  git add index.html
+   11  git commit -m "commit-1" index.html
+   12  git branch
+   13  git branch photos
+   14  git branch
+   15  git checkout photos
+   16  git branch
+   17  touch photos{1..5}
+   18  git status
+   19  git add *
+   20  git commit -m "dev-1 commits" *
+   21  ll
+   22  git branch
+   23  git branch reels
+   24  git branch
+   25  git checkout reels
+   26  ll
+   27  touhc reels{1..5}
+   28  touch reels{1..5}
+   29  ll
+   30  git status
+   31  git add *
+   32  git status
+   33  git commit -m "dev-2 commits" *
+   34  git branch
+   35  git checkout -b vcalls
+   36  git branch
+   37  ll
+   38  touch vcalls{1..5}
+   39  git add *
+   40  git commit -m "dev-3 commits" *
+   41  ll
+   42  git branch
+   43  git checkout -b promotions
+   44  touch promotions{1..5}
+   45  git add *
+   46  git commit -m "dev-4 commits" *
+   47  git branch
+   48  git checkout master
+   49  ll
+   50  git merge photos
+   51  ll
+   52  git merge reels
+   53  ll
+   54  git rebase vcalls
+   55  ll
+   56  git rebase promotions
+   57  ll
+   58  git branch
+   59  ll
+   60  git branch
+   61  git branch -D vcalls
+   62  git branch
+   63  git branch -D reels
+   64  git branch
+   65  git branch -m photos abc
+   66  git branch
+   67  git branch -m promotions def
+   68  git branch
+   69  ll
+   70  history
