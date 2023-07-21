@@ -160,3 +160,95 @@ HISTORY:
    68  git branch
    69  ll
    70  history
+
+========================================
+
+DAY-03:
+
+GITHUB:
+its a place where we can store code on internet.
+everyone can access the code.
+daily we can do push and pull activites.
+
+
+git remote add origin https://github.com/mohammedowais641/instagram.git
+
+github removed password option in aug 2021, from then we are using tokens.
+Token will be visible only once.
+
+
+Settings -- > Developer Settings -- > personal access token -- > classic -- > generate tokne -- > classic -- > 
+
+
+
+GIT PUSH: To send files from local (.git) to remote/central (GitHub)
+git push origin branch_name
+
+
+GIT PUSH: To receive files from central (GitHub) to local (.git)
+git pull origin branch_name
+
+
+HISTORY:
+  1  mkdir instagram
+    2  cd instagram/
+    3  yum install git -y
+    4  git init
+    5  ll -a
+    6  touch index.html
+    7  git add index.html
+    8  git commit -m "commit-1" index.html
+    9  git branch
+   10  git branch photos
+   11  git branch
+   12  git checkout photos
+   13  git branch
+   14  touch photos{1..5}
+   15  git add *
+   16  git commit -m "dev-1 commits" *
+   17  git checkout -b reels
+   18  git branch
+   19  touch reels{1..5}
+   20  git add *
+   21  git commit -m "dev-2 commits" *
+   22  ll
+   23  git checkout -b vcalls
+   24  git branch
+   25  touch  vcalss{1..5}
+   26  git add *
+   27  git commit -m "dev-3 commits"
+   28  git branch
+   29  git checkout photos
+   30  ll
+   31  git checkout -b promotions
+   32  ll
+   33  touch promotions{1..5}
+   34  git add *
+   35  git commit -m "dev-4 commits"
+   36  git branch
+   37  git checkout master
+   38  ll
+   39  git merge photos
+   40  git merge reels
+   41  ll
+   42  git rebase vcalls
+   43  ll
+   44  git rebase promotions
+   45  ll
+   46  git branch
+   47  git remote add origin https://github.com/mohammedowais641/instagram.git
+   48  ls -a
+   49  git branch
+   50  git push origin photos
+   51  git push origin reels
+   52  git push origin vcalls
+   53  git checkout promotions
+   54  ll
+   55  git push origin promotions
+   56  git branch
+   57  ll
+   58  git pull origin promotions
+   59  cat index.html
+   60  git pull origin promotions
+   61  cat index.html
+   62  history
