@@ -254,3 +254,39 @@ HISTORY:
    62  history
    63 abcd
    64  xyz
+===========================================================================
+DAY-04:
+
+MERGE CONFLICTS:
+WHEN WE MERGE 2 DIFFERENT BRANCHES WITH COMMON FILES WITH DIFFERENT CONTENT CONFLICTS WILL OCCUR.
+WE NEED TO RESOLVE THESE CONFICTS MANUALLY.
+
+
+
+GIT CLONE: GETTING THE REPOSITORY TO LOCAL 
+GIT FORK: GETTING THE REPOSITORY TO GITHUB
+
+CLONE VS PULL
+REPOSITORY: CLONE 
+FILE: PULL 
+
+FETCH VS PULL:
+To get the difference in files : PULL
+To show the difference in files: FETCH
+
+git pull origin master
+git fetch origin master
+
+CHERRY-PICK:
+To get specific files to one branch to another branch 
+
+
+COMMANDS:
+PUSH: git push origin master
+PULL: git pull origin master
+FETCH: git fecth 
+CLONE: git clone repo_url
+CHERRY-PICK: git cherry-pick commit_id
+
+HISTORY:
+
