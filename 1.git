@@ -290,3 +290,138 @@ CHERRY-PICK: git cherry-pick commit_id
 
 HISTORY:
 
+=================================================================
+
+GIT STASH: used to hide the files which are not committed.
+
+git stash	: to stash the files
+git stash list	: to list the stashes
+git stash apply : to unstash the files
+git stash pop	: to remove last stash 
+git stash clear	: to remove all stash 
+
+
+GIT REVERT: To undo the merging blw branches.
+git revert branch_name 
+
+if we do revert on local it wont create a new branch
+if we do revert on github it will create a new branch
+to revert first we need to merge two branches
+
+revert -- > merge -- > branches -- > commit -- > .git
+
+GIT RESTORE: Used to undo the tracked files.
+git restore --staged file_name
+git rm --cached file_name
+
+GIT SHOW: to show the files for the commits.
+git show commit_id
+
+.gitignore: to ignore the files which we dont want.
+it wil not tarck and commit the files.
+
+SETTINGS:
+git config user.name "raham"
+git config user.email "raham@gamil.com"
+
+
+HISTORY:
+
+ 1  mkdir abcd
+    2  cd abcd/
+    3  yum install git -y
+    4  git init
+    5  git --version
+    6  git -v
+    7  git branch
+    8  touch index.html
+    9  git add index.html
+   10  git commit -m "commit-1" index.html
+   11  git log
+   12  touch java1
+   13  git status
+   14  git add java1
+   15  git status
+   16  ll
+   17  git stash
+   18  ll
+   19  git stash list
+   20  git stash apply
+   21  ll
+   22  git stash list
+   23  git stash pop
+   24  git stash list
+   25  ll
+   26  git stash
+   27  git stash list
+   28  ll
+   29  git stash apply
+   30  git stash list
+   31  git stash clear
+   32  git stash list
+   33  git add java1
+   34  git commit -m "java" java1
+   35  ll
+   36  git checkout -b branch2
+   37  ll
+   38  touch python{1..5}
+   39  git add *
+   40  git commit -m "python"
+   41  git branch
+   42  git checkout master
+   43  git merge branch2
+   44  ll
+   45  git revert branch2
+   46  ll
+   47  git branch
+   48  ll
+   49  git status
+   50  touch java2
+   51  git status
+   52  git add java2
+   53  git status
+   54  git restore --staged java2
+   55  git status
+   56  touch java3
+   57  git add java2 java3
+   58  git status
+   59  git restore --staged *
+   60  git status
+   61  git log
+   62  git log --oneline
+   63  git log --oneline -2
+   64  git show 0945167
+   65  git log
+   66  git show 335436555b74a91798cd78399bb614a9d16b5bc6
+   67  git show java1
+   68  git diff java1
+   69  ll
+   70  vim java1
+   71  git add java1
+   72  git commit -m "java-1 commit2"  java1
+   73  git diff java1
+   74  git show java1
+   75  git clone https://github.com/RAHAMSHAIK007/swiggy-project.git
+   76  git branch
+   77  ;;
+   78  ll
+   79  touch php{1..10}
+   80  ll
+   81  git status
+   82  vim .gitignore
+   83  git status
+   84  ll
+   85  git status
+   86  vim .gitignore
+   87  git status
+   88  ll
+   89  git add php1
+   90  git log
+   91  git config user.name "raham"
+   92  git config user.email "raham@gamil.com"
+   93  git log
+   94  git add java2
+   95  git commut -m "jav22" java
+   96  git commit -m "jav22" java2
+   97  git log
+   98  history
