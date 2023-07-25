@@ -1,0 +1,69 @@
+MAVEN : its a build tool.
+build means adding libs, dependencies to our code and running them.
+maven is build on java platform (1.8.0)
+maven is introduced by apache software foundations in 2004.
+it is free and opensource
+
+MAIN REQ:
+1. SOURCE CODE: The code used to develope application.
+2. POM.XML: it will have libs, dependencies, plugins of code.
+4. PLUGIN: A small software which automates our manual work.
+4. JAVA-1.8.0: maven built & supports java (1.8.0)
+
+POM: PROJECT OBJECT MODE / XML=EXTENSIBLE MARKUP LANGAUGE
+
+compile + test + artifacts
+
+raw: .java -- > compile -- > .class
+.class = executable files
+unit test: testing each feature of app individually
+artifact: final product (.jar, .war, .ear)
+
+
+.JAR: JAVA ARCHIVE : GROUP OF .CLASS FILES : BACKEND
+.WAR: WEB ARCHIVE  : HTML, CSS , JS + .JAR : FRONTEND + BACKEND
+.EAR: ENTERPRISE ARCHIVE: WAR + JAR
+
+
+SETUP:
+S-1: GET SOURCE CODE
+yum install git java-1.8.0-openjdk maven tree -y
+git clone https://github.com/devopsbyraham/jenkins-java-project.git
+
+S-2: MAVEN LIFECYCLE
+
+GOAL : its a command used to perform a task.
+
+mvn compile	: compile the source code
+mvn test 	: test the code
+mvn package	: to create jar file (current folder)
+mvn install	: to create jar file (.m2 folder)
+mvn deploy	: to create war file
+
+mvn clean packge : compile + test + Artifact (jar + war)
+
+
+MAVEN VS ANT:
+1. MAVEN HAS LIFE CYCLE BUT AND DONEST 
+2. MAVEN USES PLUGINS BUT ANT USE SCRIPTS
+3. PLUING IS REUSABLE BUT SCRIPTS CANT BE REUSABLE
+4. MAVEN IS DECLARATIVE BUT ANT IS PROCEDURAL
+
+    1  yum install git java-1.8.0-openjdk maven tree -y
+    2  git clone https://github.com/devopsbyraham/jenkins-java-project.git
+    3  ll
+    4  cd jenkins-java-project/
+    5  ll
+    6  mv src/ pom.xml ../
+    7  rm -rf *
+    8  ll
+    9  cd ..
+   10  ll
+   11  mvn compile
+   12  ll
+   13  tree
+   14  mvn test
+   15  mvn package
+   16  mvn install
+   17  mvn clean package
+
