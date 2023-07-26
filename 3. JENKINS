@@ -1,0 +1,76 @@
+JENKINS:
+It is a CI/CD TOOL.
+
+CI : CONTINOUS INTEGRATION = CONTINOUS BUILD + CONTINOUS TEST
+ADV: 
+SAVE TIME
+MANUAL WORK WILL BE ELIMINATED
+WE CAN FIND BUGS QUICKLY AND EASILY
+
+CD: CONTINOUS DELIVERY & CONTINOUS DEPLOYMENT
+CDEL : MANUAL PROCESS OF DEPLOYING APP TO PRODUCTION.
+CDEP : AUTOMATION PROCESS OF DEPLOYING APP TO PRODUCTION.
+
+ENVS:
+DEV: DEVELOPERS
+TEST: TESTERS
+UAT: CLIENT
+PROD: END USERS
+
+
+TO DO CI, CDEL OR CDEP WE NEED TO CREATE PIPELINE:
+PIPELINE: STEP BY EXECUTION OF A PROCESS.
+SERIES OF EVENTS INERLINKED WITH EACH OTHER.
+
+DEP -- > CODE + COMPILE + TEST + ARTIFACT
+
+
+JENKINS INTRO:
+
+It is a CI/CD TOOL.
+its an free & open source and platform independent.
+jenkins req java-11.
+it consists lot of plugins.
+intiall jenkins created by sun micro systems in 2004.
+later it was taken by oracel.
+inital name of jenkins is hudson (paid).
+
+SETUP:
+CREATE EC2 WITH PORT 8080
+
+SCRIPT:
+vim jenkins.sh
+
+#STEP-1: INSTALLING GIT JAVA-1.8.0 MAVEN
+yum install git java-1.8.0-openjdk maven -y
+
+#STEP-2: GETTING THE REPO (jenkins.io --> download -- > redhat)
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+#STEP-3: DOWNLOAD JAVA11 AND JENKINS
+amazon-linux-extras install java-openjdk11 -y
+yum install jenkins -y
+update-alternatives --config java
+
+#STEP-4: RESTARTING JENKINS (when we download service it will on stopped state)
+systemctl start jenkins.service
+systemctl status jenkins.service
+
+sh jenkins.sh
+
+=======================
+
+new item -- > cijob -- > freestyle -- > ok
+source code management -- > git -- > https://github.com/devopsbyraham/jenkins-java-project.git -- > build step --> execute shell -- > mvn clean package
+ 
+
+
+HISTORY:
+
+1  vim jenkins.sh
+    2  sh jenkins.sh
+    3  cat /var/lib/jenkins/secrets/initialAdminPassword
+    4  cat jenkins.sh
+    5  sh jenkins.sh
+    6  jenkins -v
