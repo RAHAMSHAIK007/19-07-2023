@@ -74,3 +74,63 @@ HISTORY:
     4  cat jenkins.sh
     5  sh jenkins.sh
     6  jenkins -v
+
+
+=================================================================
+
+DAY-02: PARAMETERS, variables
+
+PARAMETERS: we can pass inputs for a job.
+
+1. choice parameter: we can pass single input among multiple.
+
+Dashboard
+job
+Configuration
+This project is parameterized
+add parameter
+choice
+
+2. STRING: Directly we can pass values.
+
+choice vs string: in choice we need to define values but no need in string
+
+3. MULTI LINE STRING: we can pass input in multiple lines.
+
+4. BOOL: True of false.
+5. FILE: we can build local files.
+
+===================================================================
+
+VARIABLES: 
+It will store data
+it will change as per time.
+
+
+1. USER DEFINED: user can define it
+
+A. LOCAL VARS: will work inside the job
+
+job -- > configure -- > build step -- > execute shell
+
+name=raham
+echo "hai all my name is $name, $name is from hyd, $name is working fo NIT"
+
+save -- > build now
+
+B. GLOBAL VARS: will work outside of the job
+
+Manage Jenkins -- > System -- >  Global properties -- > Environment variables
+add -- > Name: name -- > value: raham -- > save
+
+JENKINS ENV VARS:
+Note: user cannot define all variables in jenkins, so we need to use env vars.
+ENV VARS: vars are changing build to build.
+
+job -- > config -- > build step -- > execute shell -- > the list of available environment variables
+
+
+echo "the number of build is $BUILD_NUMBER, the job is $JOB_NAME"
+
+save -- > build now
+
