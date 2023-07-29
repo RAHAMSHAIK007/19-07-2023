@@ -134,3 +134,41 @@ echo "the number of build is $BUILD_NUMBER, the job is $JOB_NAME"
 
 save -- > build now
 
+==========================================================
+
+DAY-03: CRONJOB,POLL SCM, WEBHOOKS, THROTTLE BUILD
+
+CRONJOB: it will do scheduled works. it follows cron syntax
+
+*	: minutes
+*	: hours
+* 	: date
+*	: month
+*	: day (0=sunday, 1=monday -------)
+do ci job -- > Build Triggers -- > Build periodically -- > */1 * 29 7 6 -- > save
+
+DRAWBACK: It will do given work, it will not check changes.
+
+POLL SCM: it will make a build in given time when dev commit the code.
+do ci job -- > Build Triggers -- > Poll SCM -- > */1 * 29 7 6 -- > save
+
+DRAWBACK:
+it need to wait for time period.
+
+
+WEBHOOKS: It will trigger build the moment when dev commit the code.
+
+do ci job -- > Build Triggers -- > GitHub hook trigger for GITScm polling -- > save
+github -- > repo -- > settings -- > webhook -- > add -- > 
+
+Payload URL (jenkins) -- > http://15.188.51.9:8080/github-webhook/
+Content type -- > application/json -- > add webhook
+
+
+THROTTLE BUILD: To restrict the number of builds.
+WHY: to avoid server load.
+
+create a job -- > Throttle builds -- > Number of builds: 3 & Time period: hours -- > save
+
+
+ 
