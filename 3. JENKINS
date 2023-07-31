@@ -171,4 +171,68 @@ WHY: to avoid server load.
 create a job -- > Throttle builds -- > Number of builds: 3 & Time period: hours -- > save
 
 
- 
+ ====================================================================
+
+LINKEDJOBS: One job is linked with another job.
+if first job is ran then it will trigger second job.
+
+1. create two jobs.
+2. job-one -- > configure -- > Post-build Actions -- > Build other projects -- > two -- > save
+
+types:
+1. up stream:
+2. down stream:
+
+
+TO EXECUTE SHELL COMMANDS:
+Build Steps -- > Execute shell -- > cat /etc/passwd && cat /etc/group -- > save -- > buildnow
+To verify outupt we need to go to console output.
+
+CUSTOMWOKSPACE: we can store the output of jobs in our req location
+create a folder on server
+mkdir raham -- > cd /
+chown jenkins:jenkins /root
+cd /root
+chown jenkins:jenkins raham
+job -- > configure -- > Use custom workspace -- > /root/raham -- > save 
+
+
+Terminate a build if it's stuck: if the task is taking more than expected time we can stop it.
+
+job -- > configure -- > Build Environment -- > Terminate a build if it's stuck -- > Build steps -- > Execute shell -- > 
+touch file3
+sleep 200
+touch abcd.txt
+
+save & build
+
+history:
+ 1  vim jenkins.sh
+    2  sh jenkins.sh 
+    3  cat /proc/cpuinfo 
+    4  cat /etc/passwd
+    5  cd /var/lib/jenkins/workspace/one
+    6  ll
+    7  pwd
+    8  cd
+    9  ll
+   10  rm -rf *
+   11  ll
+   12  cd /tmp/
+   13  ll
+   14  cd /root/
+   15  ll
+   16  mkdir raham
+   17  ll
+   18  cd /
+   19  ll
+   20  chown jenkins:jenkins root/
+   21  ll
+   22  cd /root/
+   23  ll
+   24  chown jenkins:jenkins raham/
+   25  ll
+   26  cd raham/
+   27  ll
+   28  pwd
+   29  history
