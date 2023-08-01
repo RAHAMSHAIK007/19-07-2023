@@ -236,3 +236,44 @@ history:
    27  ll
    28  pwd
    29  history
+===================================================================
+DAY-04:
+
+
+LIMITATIONS OF USING SINGLE NODE:
+1. Load is incresing.
+2. Memory consumption
+3. Delayed outputs
+
+
+JENKINS MASTER & SLAVE:
+1. Master will distribute the work to slaves.
+2. Master and slave communiction will be on ssh.
+3. Master will assign job to slave by using labels.
+
+
+STEUP:
+1. Create a slave node and install java-11(agent)
+amazon-linux-extras install java-openjdk11 -y
+
+Note: without java-11 on woker node slave will not work.
+
+2. Dashboard -- > Manage Jenkins -- > Nodes and Clouds --- > new node -- > create -- > name: worker-1 -- > Permanent Agent -- > create -- > 
+
+Number of executors	: number of builds parallely
+Remote root directory	: /tmp
+Labels			: raham
+usage			: last opt
+Launch method		: last opt
+Host			: private ip of slave
+Credentials 		: add -- > Kind: ssh username with private key (user: ec2-user & Private Key -- > Enter directly -- > ADD -- > enter pem file)
+Host Key Verification Strategy : last opt -- > save
+
+
+CREATE A CI JOB -- > CONFIGURE -- > Restrict where this project can be run -- > Label Expression
+raham -- > save 
+
+
+NOTE: If build failed install the packages
+yum install git java-1.8.0-openjdk maven -y
+
