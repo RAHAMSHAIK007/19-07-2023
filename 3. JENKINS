@@ -1,3 +1,5 @@
+DAY : 01
+
 JENKINS:
 It is a CI/CD TOOL.
 
@@ -237,7 +239,7 @@ history:
    28  pwd
    29  history
 ===================================================================
-DAY-04:
+DAY-05:
 
 
 LIMITATIONS OF USING SINGLE NODE:
@@ -276,4 +278,23 @@ raham -- > save
 
 NOTE: If build failed install the packages
 yum install git java-1.8.0-openjdk maven -y
+
+
+HISTORY
+
+ vim jenkins.sh
+    2  sh jenkins.sh
+    3  git -v
+    4  clear
+    5  mvn --version
+    6  clear
+    7  hostname -i
+    8  ll
+    9  cd /tmp/workspace/slave-1
+   10  ll
+   11  cd target/
+   12  ll
+   13  cd /tmp
+   14  ll
+
 
