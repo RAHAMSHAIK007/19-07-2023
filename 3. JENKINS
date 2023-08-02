@@ -277,3 +277,211 @@ raham -- > save
 NOTE: If build failed install the packages
 yum install git java-1.8.0-openjdk maven -y
 
+================================================
+
+DAY-06: PIPELINE, PORT NUMBER AND PASSWORDLESS LOGIN
+
+
+PIPELINE: STEP BY EXECUTION OF A PROCESS.
+SERIES OF EVENTS INERLINKED WITH EACH OTHER.
+FOR PIPELINE WE WILL USE GROOVY SYNTAX.
+
+TYPES:
+1. SCRIPTED (EASY)
+2. DECLARAVTIVE (COMPLEX)
+
+
+SCRIPTED:
+
+node {
+    stage('stage-1') {
+        sh 'touch file1'
+    }
+}
+
+DECLARATIVE:
+
+pipeline {
+    agent any 
+    
+    stages {
+        stage('stage-1') {
+            steps {
+                sh 'touch file2'
+            }
+        }
+    }
+}
+
+PASSS:
+P: pipeline
+A: agent
+S: stages
+S: stage
+S: steps
+
+DIFFERENCES:
+Scripted start with node, declaratvie start with pipeline.
+scripted will not have stages, but declarative we have stages.
+scrtpted will not have steps, but declarative we have steps.
+scripted is less length, declartive is more.
+
+SINGLE STAGE PIPELINE: It will have only one stage in pipeline.
+
+pipeline {
+    agent any 
+    
+    stages {
+        stage('stage-1') {
+            steps {
+                sh 'touch file2'
+            }
+        }
+    }
+}
+
+
+MULTI STAGE PIPELINE: It will have more than one stage in pipeline.
+
+pipeline {
+    agent any 
+    
+    stages {
+        stage('one') {
+            steps {
+                sh 'cat /etc/passwd'
+            }
+        }
+        stage('two') {
+            steps {
+                sh 'cat /etc/group'
+            }
+        }
+        stage('three') {
+            steps {
+                sh 'touch file3'
+            }
+        }
+    }
+}
+
+PIPELINE AS A CODE: Executing multiple actions/commands on a single stage.
+
+pipeline {
+    agent any 
+    
+    stages {
+        stage('abc') {
+            steps {
+                sh 'cat /etc/passwd'
+                sh 'cat /etc/group'
+                sh 'touch file1'
+            }
+        }
+    }
+}
+
+
+PIPELINE AS A CODE SINGLE SHELL/LINE: Executing multiple actions/commands on a single stage With single shell.
+
+pipeline {
+    agent any 
+    
+    stages {
+        stage('abc') {
+            steps {
+                sh '''
+                cat /etc/passwd
+                cat /etc/group
+                touch file5
+                '''
+            }
+        }
+    }
+}
+
+CI USING PIPELINE:
+
+pipeline sytax -- > sample step : git -- > repository: https://github.com/devopsbyraham/jenkins-java-project.git -- > branch: master -- > generete pipeline script
+
+
+
+
+pipeline {
+    agent any 
+    
+    stages {
+        stage('checkout') {
+            steps {
+                git 'https://github.com/devopsbyraham/jenkins-java-project.git'
+            }
+        }
+        stage('build') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+        stage('test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+    }
+}
+
+
+
+VARIBALES ON PILEINE:
+
+pipeline {
+    agent any 
+    environment {
+        name = 'raham'
+        loc = 'hyd'
+        c = 'nareshit'
+    }
+    
+    stages {
+        stage('one') {
+            steps {
+              echo "im $name, $name is working for $c, $name is from $loc"  
+            }
+        }
+    }
+}
+
+
+PASSWORD LESS LOGIN:
+
+cd /var/lib/jenkins/
+vim config.xml  -- > line 7 -- > true=false -- > save
+systemctl restart jenkins.service
+
+CHANGING PORT NUMBER:
+
+cd /usr/lib/systemd/system
+vim jenkins.service -- > line 67 -- > 8080=8082 -- > save
+systemctl daemon-reload
+systemctl restart jenkins.service
+
+HISTORY:
+
+    1  cd /var/lib/jenkins/workspace/pipeline
+    2  ls
+    3  rm -rf *
+    4  ll
+    5  cd /var/lib/jenkins/
+    6  ll
+    7  vim config.xml
+    8  systemctl restart jenkins.service
+    9  vim config.xml
+   10  systemctl restart jenkins.service
+   11  cd /
+   12  ll
+   13  cd /usr/lib/systemd/system
+   14  ll
+   15  pwd
+   16  vim jenkins.service
+   17  systemctl daemon-reload
+   18  systemctl restart jenkins.service
+   19  history
