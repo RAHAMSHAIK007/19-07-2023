@@ -485,3 +485,119 @@ HISTORY:
    17  systemctl daemon-reload
    18  systemctl restart jenkins.service
    19  history
+================================================
+
+POST BUILD ACTIONS: Actions that are performed after the build.
+
+1. success: it will trigger when build is succesful only.
+2. failure: it will trigger when build is failed only.
+3. always: it will trigger when build if it is succesful or failure.
+
+
+
+pipeline {
+    agent any
+    
+    stages {
+        stage('one') {
+            steps {
+               git 'https://github.com/devopsbyraham/jenkins-java-project.git' 
+            }
+        }
+        stage('artifact') {
+            steps {
+               sh 'mvn clean package'
+            }
+        }
+    }
+    post {
+        always {
+            echo 'my artifact file is generated'
+        }
+    }
+}
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                sh 'printenv'
+            }
+        }
+    }
+}
+
+
+INPUT PARAMETER: It will trigger the build when we pass input on runtime for a stage.
+
+
+pipeline {
+    agent any 
+    
+    stages {
+        stage('checkout') {
+            steps {
+                git 'https://github.com/devopsbyraham/jenkins-java-project.git'
+            }
+        }
+        stage('build') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+        stage('test') {
+            input {
+                message "do you want to continue"
+                ok "yes"
+            }
+            steps {
+                sh 'mvn test'
+            }
+        }
+    }
+}
+
+
+PARAMETERS ON PIPELINE:
+OPTINAL
+
+
+RBAC: ROLE BASED ACCESS CONTROL
+WHY: TO RESTRIC THE USERS.
+
+S-1: CREATE 2 USERS
+Dashboard -- > Manage Jenkins -- > security -- > users 
+
+S-2: DOWNLOAD A PLUGIN 
+Dashboard -- > Manage Jenkins -- > PLUGINS -- > Available -- > Role-based Authorization Strategy -- > downnload -- > go back to top page
+
+s-3: Creating ROLES
+Dashboard -- > Manage Jenkins -- > security -- > Authorization -- > Role-based  Strategy -- > save
+
+manager / create roles -- > Manage roles -- > fresher -- > add -- > exeperince -- > add
+fresher: overall -- > read & job -- > read
+experince: administrator
+
+S-4: ATTACH ROLES
+ASSIGN ROLES: ADD USER -- > NAME -- > SELECT ROLES -- > SAVE
+
+ 
+PRACTISE THIS ON ANOTHER BROWSER.
+
+NOTE:
+1. FOR A SINGLE ROLE WE CAN ATTACH MULTIPLE USERS.
+2. PERMISSIONS WILL BE GIVEN TO ROLE NOT FOR USERS.
+
+==========================================
+BLUE OCEAN: It is used to enhnace the jenkins dashboard and pipleine creations.
+
+REMOTE TRIGGERING: Run a build from remote location.
+Build Triggers -- > Trigger builds remotely -- > Authentication Token
+
+
+
+
+
