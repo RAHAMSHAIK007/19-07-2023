@@ -599,5 +599,37 @@ Build Triggers -- > Trigger builds remotely -- > Authentication Token
 
 
 
+PROJECT HISTORY:
+SLAVE:
+
+
+    1  amazon-linux-extras install java-openjdk11 -y
+    2  wget
+    3  wget http://dlcdn.apache.org/tomcat/tomcat-9/v9.0.78/bin/apache-tomcat-9.0.78.tar.gz
+    4  ll
+    5  tar -zxvf apache-tomcat-9.0.78.tar.gz
+    6  cd apache-tomcat-9.0.78/
+    7  ll
+    8  vim webapps/manager/META-INF/context.xml
+    9  vim conf/tomcat-user.xml
+   10  vim conf/tomcat-users.xml
+   11  ./bin/startup.sh
+   12  git -v
+   13  maven -v
+   14  yum install git java-1.8.0-openjkd maven -y
+   15  mvn -version
+   16  update-alternatives --config java
+   17  java -version
+   18  yum install java-1.8.0-openjdk -y
+   19  update-alternatives --config java
+   20  mvn -version
+   21  yum remove maven* java* -y
+   22  java -version
+   23  mvn --version
+   24  yum install java-1.8.0-openjdk maven -y
+   25  mvn --version
+   26  amazon-linux-extras install java-openjkd11 -y
+   27  amazon-linux-extras install java-openjdk11 -y
+   28  history
 
 
