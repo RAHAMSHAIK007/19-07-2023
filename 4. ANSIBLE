@@ -1,0 +1,112 @@
+ANSIBLE: 
+ITs an free & open-source automation tool.
+what: software installation, server creation, deployment
+
+year: 2012 
+invented by: maichel dehaan
+lang: yaml (yet another markup language)
+depenedncy: python
+owned: redhat
+
+ANSIBLE ARCHITECTURE COMPONENTS:
+
+ANSIBLE SERVER: it will connect with worker nodes and do the work.
+CONNECTION: SSH 
+INVENTORY FILE: It will store ip address of worker node.
+PLAYBOOK: It stores the code.
+
+SETUP:
+CREATE 5 SERVERS (1=ANSIBLE, 2=DEV, 2 TEST)
+
+ALL SERVERS:
+hostnamectl set-hostname ansible/dev-1/dev-2/test-1/test-2
+sudo -i
+passwd root
+vim /etc/ssh/sshd_config (38 uncomment, 63 no=yes)
+systemctl restart sshd
+systemctl status sshd
+hostname -i
+
+ANSIBLE:
+amazon-linux-extras install ansible2 -y
+yum install python3 python-dlevel python-pip -y
+vim /etc/ansible/hosts
+
+TO ESTABLISH THE CONNECTION WE NEED TO COPY KEYS FOR ANSIBLE TO WORKER NODE.
+ssh-keygen -- > enter -- > enter -- > enter 
+ssh-copy-id root@PRIVATE-IP OF WORKERNODE
+yes -- > password -- > ssh PRIVATE-IP OF WORKERNODE -- > ctrl d
+
+do the same process for all nodes.
+TO VERIFY: ansible -m ping all
+
+
+TO WORK WITH ANSIBLE WE CAN DO IT ON 3 WAYS:
+
+1. ADHOC COMMANDS:
+These are simple linux commands.
+we use it for only one time.
+these commands will be overrided.
+
+
+ansible all -a "yum install maven -y"
+
+ansible: cli tool
+all: all servers
+-a: arguments 
+yum install maven -y: linux command
+
+ansible all -a "yum install maven -y"
+ansible all -a "touch file1"
+ansible all -a "mkdir raham"
+ansible all -a "yum install httpd -y"
+ansible all -a "systemctl restart httpd"
+ansible all -a "systemctl status httpd"
+ansible all -a "cat /etc/passwd"
+ansible all -a "cat /etc/passwd"
+
+
+TROUBLESHOOT FOR CONNECTION REFUES:
+1. cd /root/.ssh/
+remove all files (rm -f *)
+generate the key and copy
+
+
+HISTORY:
+ 1  passwd root
+    2  vim /etc/ssh/sshd-config
+    3  vim /etc/ssh/sshd_config
+    4  systemctl restart sshd
+    5  systemctl status sshd
+    6  hostname -i
+    7  amazon-linux-extras install ansible2 -y
+    8  yum install python3 python-dlevel python-pip -y
+    9  vim /etc/ansible/
+   10  vim /etc/ansible/hosts
+   11  ssh-keygen
+   12  ssh-copy-id root@172.31.27.53
+   13  ssh 172.31.27.53
+   14  ssh-copy-id root@172.31.20.145
+   15  ssh 172.31.20.145
+   16  ssh-copy-id root@172.31.24.200
+   17  ssh 172.31.24.200
+   18  ssh-copy-id root@172.31.28.249
+   19  ssh
+   20  ssh 172.31.28.249
+   21  ansible -m ping all
+   22  ansible all -a "yum install git -y"
+   23  ansible all -a "yum install maven -y"
+   24  ansible all -a "mvn -version"
+   25  ansible all -a "touch file1"
+   26  ansible all -a "ls"
+   27  ansible all -a "mkdir raham"
+   28  ansible all -a "ls"
+   29  ansible all -a "yum install httpd -y"
+   30  ansible all -a "systemctl start httpd"
+   31  ansible all -a "systemctl status httpd"
+   32  ansible all -a "cat /etc/passwd"
+   33  ansible all -a "useradd raham"
+   34  ansible all -a "cat /etc/passwd"
+   35  history
+
+=================================================================================
