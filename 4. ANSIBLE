@@ -110,3 +110,222 @@ HISTORY:
    35  history
 
 =================================================================================
+DAY-02:
+
+MODULES:
+In ansible modules are used advancement of adhoc.
+modules will be on key-value pair.
+key-value pair is also called as dictionary.
+
+ansible all -a "yum install git -y"
+ansible all -m yum -a "name=git state=present"
+
+
+ansible all -a "yum install maven -y"
+ansible all -m yum -a "name=maven state=present"  (present=installing)
+ansible all -m yum -a "name=maven state=absent"   (absent=uninstalling)
+ansible all -m yum -a "name=maven state=latest"   (latest=update)
+ansible all -m yum -a "name=httpd state=present"
+ansible all -m yum -a "pkg=httpd state=present"
+ansible all -m service -a "name=httpd state=started"
+ansible all -m service -a "name=httpd state=restarted"
+ansible all -m service -a "name=httpd state=stop"
+ansible all -m user -a "name=prakash state=present"
+ansible all -m copy -a "src=raham.txt dest=/tmp"
+
+
+PLAYBOOK:
+Its a collection of modules.
+we can reuse the modules multiple times.
+we can execute the multiple modules at a time.
+
+HOW TO WRITE:
+To write the playbook we need to use YAML.
+YAML= YET ANOTHER MARKUP LANGUAGES
+extension for yaml is (.yml or .yaml)
+it works on key-value pair.
+playbook start with a list.
+we need to follow indentation.
+
+
+
+
+ansible all -a "yum install maven -y"
+ansible all -m yum -a "name=maven state=present"  
+
+- hosts: all
+  tasks:
+    - name: install git
+      yum: name=git state=present
+
+
+ansible-playobbk playbook1.yml
+NOTE: REmove pakage after installing
+
+
+play: in how many servers its executing
+Gathering_facts: it is default taks (gether info from worker nodes)
+ok: how many tasks perfomed
+changed: how many taks perfomed by user
+
+
+MULTI-TASK PLAYBOOK:
+
+- hosts: all
+  tasks:
+    - name: install git
+      yum: name=git state=present
+    - name: installing maven
+      yum: name=maven state=present
+
+ansible-playobbk playbook1.yml
+
+sed: %s/present/absent/  (to replace present with absent)
+
+- hosts: all
+  tasks:
+    - name: install git
+      yum: name=git state=absent
+    - name: installing maven
+      yum: name=maven state=absent
+
+==================================================
+
+USING MULTI MODULES:
+
+- hosts: all
+  tasks:
+    - name: install git
+      yum: name=git state=present
+    - name: installing maven
+      yum: name=maven state=present
+    - name: install httpd
+      yum: name=httpd state=present
+    - name: startiing httpd
+      service: name=httpd state=started
+    - name: craete user
+      user: name=krishna state=present
+
+
+TAGS: 
+We can execute a specif tasks & we can skip the specific tasks.
+
+
+- hosts: all
+  tasks:
+    - name: install git
+      yum: name=git state=present
+      tags: a
+    - name: installing maven
+      yum: name=maven state=present
+      tags: b
+    - name: install httpd
+      yum: name=httpd state=present
+      tags: c
+    - name: startiing httpd
+      service: name=httpd state=started
+      tags: d
+    - name: craete user
+      user: name=krishna state=present
+      tags: raham
+
+
+TO EXECUT SPECIFC TASKS:
+
+single tag: ansible-playbook playbook1.yml --tags a
+multi tags: ansible-playbook playbook1.yml --tags b,raham
+
+
+TO SKIP TAGS SINGLE OR MULTI
+
+- hosts: all
+  tasks:
+    - name: install git
+      yum: name=git state=absent
+      tags: a
+    - name: installing maven
+      yum: name=maven state=absent
+      tags: b
+    - name: install httpd
+      yum: name=httpd state=absent
+      tags: c
+    - name: startiing httpd
+      service: name=httpd state=started
+      tags: d
+    - name: craete user
+      user: name=krishna state=absent
+      tags: raham
+
+
+single tag: ansible-playbook playbook1.yml --skip-tags "d"
+multi tags: ansible-playbook playbook1.yml --skip-tags "d,raham"
+
+HISTORY:
+ 37  sudo -i
+   38  ansible all -a "git -v"
+   39  ansible all -m ping
+   40  ssh-copy-id root@172.31.27.53
+   41  ssh-copy-id root@172.31.20.145
+   42  ssh-copy-id root@172.31.24.200
+   43  cd .ssh/
+   44  cat known_hosts
+   45  cd
+   46  ansible all -m ping
+   47  ssh-copy-id root@172.31.24.200
+   48  cd .ssh/
+   49  vim known_hosts
+   50  ssh-copy-id root@172.31.24.200
+   51  ll
+   52  cat known_hosts
+   53  rm -rf *
+   54  ll
+   55  ssh-keygen
+   56  ssh-copy-id root@172.31.27.53
+   57  ssh
+   58  ssh 172.31.27.53
+   59  ssh-copy-id root@172.31.20.145
+   60  ssh-copy-id root@172.31.24.200
+   61  cd
+   62  ssh-copy-id root@172.31.28.249
+   63  ssh-copy-id root@172.31.24.200
+   64  ssh-copy-id root@172.31.28.249
+   65  ansible -m ping all
+   66  ansible all -a "yum remove git* maven* httpd* -y"
+   67  ansible all -m yum -a "name=git state=present"
+   68  ansible all -m yum -a "name=maven state=present"
+   69  ansible all -m yum -a "name=maven state=absent"
+   70  cd
+   71  ansible all -m yum -a "name=maven state=present"
+   72  ansible all -m yum -a "name=maven state=latest"
+   73  ansible all -m yum -a "name=httpd state=present"
+   74  ansible all -m yum -a "name=httpd state=started"
+   75  ansible all -m service -a "name=httpd state=started"
+   76  ansible all -m service -a "name=httpd state=restarted"
+   77  ansible all -m service -a "name=httpd state=stopped"
+   78  ansible all -m service -a "name=httpd state=restarted"
+   79  ansible all -m user -a "name=prakash state=present"
+   80  vim raham.txt
+   81  ll
+   82  ansible all -m copy -a "src=raham.txt dest=/tmp"
+   83  rm -rf *
+   84  vim playbook1.yml
+   85  ansible all -a "yum remove git* maven* httpd* -y"
+   86  cat playbook1.yml
+   87  ansible-playbook playbook1.yml
+   88  ansible all -a "yum remove git* -y"
+   89  vim playbook1.yml
+   90  ansible-playbook playbook1.yml
+   91  vim playbook1.yml
+   92  ansible-playbook playbook1.yml
+   93  vim playbook1.yml
+   94  ansible-playbook playbook1.yml
+   95  vim playbook1.yml
+   96  ansible-playbook playbook1.yml
+   97  vim playbook1.yml
+   98  cat playbook1.yml
+   99  ansible-playbook playbook1.yml --tags b
+  100  ansible-playbook playbook1.yml --tags raham
+  101  ansible-playbook playbook1.yml --tags a
+  102  ansible-playbook playbook1.yml --tags c,d
+  103  vim playbook1.yml
+  104  ansible-playbook playbook1.yml --skip-tags "d"
