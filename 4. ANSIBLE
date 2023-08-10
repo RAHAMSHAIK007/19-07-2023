@@ -329,3 +329,189 @@ HISTORY:
   102  ansible-playbook playbook1.yml --tags c,d
   103  vim playbook1.yml
   104  ansible-playbook playbook1.yml --skip-tags "d"
+
+=============================================
+
+DAY-03:
+
+Shell vs Command vs Raw module:
+
+these modules doesnt req key value pair.
+these will execute linux commands directly.
+
+raw > command > shell
+
+
+- hosts: dev
+  tasks:
+    - name: installing git
+      yum: name=git state=present
+
+    - name: install maven
+      shell: yum install maven -y
+
+    - name: install apache
+      command: yum install httpd -y
+
+    - name: install tree
+      raw: yum install tree -y
+
+NOTE: Pls remove the installed packages
+
+
+LOOPS: To do the work repetedly.
+
+- hosts: dev
+  tasks:
+    - name: installing pks
+      yum: name={{item}} state=present
+      with_items:
+        - git
+        - maven
+        - httpd
+        - tree
+
+NOTE: Pls remove the installed packages
+
+- hosts: dev
+  tasks:
+    - name: creating users
+      user: name={{item}} state=present
+      with_items:
+        - srikar
+        - venky
+        - yogesh
+        - reviii
+NOTE: Pls remove the users 
+
+we can use this to work with files and folders
+
+
+VARIABLES:
+1. STATIC: Defines inside the playbook
+2. DYNAMIC: Defines outside the playbook
+
+
+STAIC:
+
+- hosts: dev
+  vars:
+    a: tree
+    b: maven
+  tasks:
+    - name: installing pkgs
+      yum: name={{a}} state=present
+    - name: abcd
+      yum: name={{b}} state=present
+
+
+DYNAMIC:
+- hosts: dev
+  tasks:
+    - name: installing pkgs
+      yum: name={{a}} state=present
+
+ansible-playbook playbook1.yml --extra-vars "a=httpd"
+
+- hosts: dev
+  tasks:
+    - name: installing pkgs
+      yum: name={{a}} state=present
+      yum: name={{b}} state=present
+ansible-playbook playbook1.yml --extra-vars "a=docker b=java-1.8.0-openjdk"
+
+
+
+Handlers: 
+we use handlers when one task is depending on another task.
+fisrt task will executed and ask for second task to execute.
+
+
+- hosts: dev
+  tasks:
+    - name: installing httpd
+      yum: name=httpd state=present
+      notify: restart httpd
+
+  handlers:
+    - name: restart httpd
+      service: name=httpd state=restarted
+
+HISTORY:
+
+ 107  vim playbook1.yml
+  108  ansible -m ping all
+  109  vim playbook1.yml
+  110  ansible-playbook playbook1.yml
+  111  vim playbook1.yml
+  112  vi playbook1.yml
+  113  ansible-playbook playbook1.yml
+  114  vim playbook1.yml
+  115  ansible-playbook playbook1.yml
+  116  vim playbook1.yml
+  117  ansible-playbook playbook1.yml
+  118  ansible dev -a "mvn -version"
+  119  ansible dev -a "httpd -v"
+  120  vim playbook1.yml
+  121  ansible-playbook playbook1.yml
+  122  ansible dev -a "cat /etc/passwd"
+  123  vim playbook1.yml
+  124  ansible-playbook playbook1.yml
+  125  ansible dev -a "cat /etc/passwd"
+  126  vim playbook1.yml
+  127  ansible-playbook playbook1.yml  --extra-vars "a=git"
+  128  ansible all -a "git -v"
+  129  ansible all -a "httpd -v"
+  130  ansible-playbook playbook1.yml --exta-vars "a=httpd"
+  131  ansible-playbook playbook1.yml --extra-vars "a=httpd"
+  132  vim playbook1.yml
+  133  cat playbook1.yml
+  134  ansible-playbook playbook1.yml --extra-vars "a=maven b=tree"
+  135  ansible dev -a "mvn -version"
+  136  ansible dev -a "mvn --version"
+  137  ansible dev -a "tree --version"
+  138  ansible-playbook playbook1.yml --extra-vars "a=maven, b=tree"
+  139  ansible dev -a "mvn --version"
+  140  ansible dev -a "mvn -version"
+  141  ansible-playbook playbook1.yml --extra-vars "a=docker, b=java-1.8.0-openjdk"
+  142  ansible dev -a "docker -v"
+  143  ansible dev -a "java -version"
+  144  vim playbook1.yml
+  145  ansible dev -a "yum remove git* maven* httpd* docker* tree* java* -y"
+  146  ansible-playbook playbook1.yml --extra-vars "a=docker, b=java-1.8.0-openjdk"
+  147  ansible-playbook playbook1.yml --extra-vars "a=docker b=java-1.8.0-openjdk"
+  148*
+  149  ansible dev -a "docker -v"
+  150  vim playbook1.yml
+  151  ansible-playbook playbook1.yml
+  152  ansible dev -a "tree -v"
+  153  ansible dev -a "mvn -version"
+  154  vim playbook1.yml
+  155  ansible dev -a "httpd -v"
+  156  ansible-playbook playbook1.yml --extra-vars "a=httpd"
+  157  ansible dev -a "docker -v"
+  158  ansible dev -a "httpd -v"
+  159  vim playbook1.yml
+  160  ansible dev -a "yum remove git* maven* -y"
+  161  ansible dev -a "git -v"
+  162  ansible dev -a "maven -version"
+  163  ansible dev -a "mvn-version"
+  164  ansible dev -a "mvn -version"
+  165  ansible-playbook playbook1.yml --extra-vars "a=maven"
+  166  ansible dev -a "mvn -version"
+  167  ansible dev -a "git -v"
+  168  vim playbook1.yml
+  169  ansible-playbook "yum remove tree* -y"
+  170  ansible dev -a "yum remove tree* -y"
+  171  ansible-playbook playbook1.yml --extra-vars "a=maven"
+  172  vim playbook1.yml
+  173  ansible dev -a "mvn -version"
+  174  ansible dev -a "tree -v"
+  175  vim playbook1.yml
+  176  ansible-playbook playbook1.yml
+  177  vim playbook1.yml
+  178  ansible-playbook playbook1.yml
+  179  ansible dev -a "yum remove httpd* -y"
+  180  ansible-playbook playbook1.yml
+  181  vim playbook1.yml
+  182  history
