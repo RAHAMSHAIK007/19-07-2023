@@ -515,3 +515,198 @@ HISTORY:
   180  ansible-playbook playbook1.yml
   181  vim playbook1.yml
   182  history
+
+===========================================
+
+HOMOGENIUS CLUSTER: All nodes are same os and flavour
+HETROGENIUS CLUSTER: All nodes are not same os and flavour
+
+Redhat: yum install git -y
+Ubuntu: apt install git -y
+
+Conditions: we use the conditions to work with hetrogenius clusters mostly.
+
+- hosts: test
+  tasks:
+    - name: Installing git on RedHat
+      raw: yum install git -y
+      when: ansible_os_family == "RedHat"
+
+    - name: Instlling git on ubuntu
+      raw: apt install git -y
+      when: ansible_os_family == "Debian"
+
+
+- hosts: test
+  tasks:
+    - name: Installing tree on RedHat
+      raw: yum install tree -y
+      when: ansible_os_family == "RedHat"
+
+    - name: Instlling tree on ubuntu
+      raw: apt install tree -y
+      when: ansible_os_family == "Debian"
+
+
+SETUP MODULE: To show the complete info about worker node.
+ansible -m setup test[0]
+ansible -m setup test[0] | grep -i family
+
+ROLES: 
+Its the way of managing the playbooks.
+we create roles for individual works.
+we can divide the playbook in folders.
+we can reduce length of playbook.
+data will be encapsulated here.
+
+mkdir playbooks
+cd playbooks/
+mkdir -p roles/one/tasks
+mkdir -p roles/two/tasks
+mkdir -p roles/three/tasks
+
+
+vim roles/one/tasks/main.yml
+
+- name: Installing git 
+  raw: yum install git -y
+
+
+vim roles/two/tasks/main.yml
+
+- name: Installing httpd 
+  raw: yum install httpd -y
+
+vim roles/three/tasks/main.yml
+
+- name: create users
+  user: name={{item}} state=present
+  with_items:
+    - siva
+    - abcd
+    - jhony
+    - saurabh
+    - asim
+
+vim master.yml
+- hosts: test
+  roles:
+    - one
+
+
+ANSIBLE-VALUT:
+It will encrypt the data in file/playbook.
+AES256 is the technique used by this valut.
+in real time we keep user credentials.
+we need to give password for the vault.
+Note: we can restrict the user also.
+
+
+ansible-vault create creds.txt	: to create a vault
+ansible-vault edit creds.txt	: to edit a vault
+ansible-vault rekey creds.txt	: to change password for vault
+ansible-vault decrypt creds.txt	: to decrypt a vault
+ansible-vault encrypt creds.txt	: to encrypt a vault
+ansible-vault view creds.txt	: to show the content but not decrypt
+
+
+STRTAGIES: its a way of executing tasks on hosts.
+1. Default/Linear
+2. Free
+
+by default ansible will use default/Linear startegy.
+when  we use defult some times task-1 will block task-2
+to avoid this we use free strategy which executes task-2 if task-1 is on pending or blocked.
+
+JINJA-2 TEMPLATE: We use this for customized output.
+
+DEBUG MODULE: It is used to print words or msgs from the playbook.
+
+
+- hosts: test[0]
+  tasks:
+    - debug:
+        msg: "hai all my name is raham"
+
+
+LOOKUPS: It will retrive the data form files,db ---
+
+vim creds.txt
+user=raham
+
+- hosts: dev
+  vars:
+    a: "{{lookup('file', '/root/creds.txt') }}"
+  tasks:
+    - debug:
+        msg: "hai my user name is {{a}}"
+
+
+history:
+
+ 182  vim playbook1.yml
+  183  ansible-playbook playbook1.yml
+  184  ansible -m setup test[0]
+  185  ansible -m setup test[0] | grep -i family
+  186  vim playbook1.yml
+  187  ansible-playbook playbook1.yml
+  188  vim playbook1.yml
+  189  cat /etc/os-release
+  190  uname -a
+  191  uname -r
+  192  rm -rf *
+  193  ll
+  194  mkdir playbooks
+  195  cd playbooks/
+  196  mkdir -p roles/one/tasks
+  197  mkdir -p roles/two/tasks
+  198  vim roles/one/tasks/main.yml
+  199  vim roles/two/tasks/main.yml
+  200  vim master.yml
+  201  ansible-playbook master.yml
+  202  mkdir -p roles/three/tasks
+  203  vim roles/three/tasks/main.yml
+  204  vim master.yml
+  205  ansible-playbook master.yml
+  206  vim roles/three/tasks/main.yml
+  207  vim roles/two/tasks/main.yml
+  208  vim roles/one/tasks/main.yml
+  209  vim master.yml
+  210  ansible-playbook master.yml
+  211  ansible all -a "yum remove git* -y"
+  212  vim creds.txt
+  213  cat creds.txt
+  214  rm -rf *
+  215  ansible-vault create creds.txt
+  216  cat creds.txt
+  217  ansible-vault edit creds.txt
+  218  cat creds.txt
+  219  ansible-vault rekey creds.txt
+  220  ansible-vault decrypt creds.txt
+  221  cat creds.txt
+  222  ansible-vault encrypt creds.txt
+  223  cat creds.txt
+  224  ansible-vault show creds.txt
+  225  cat creds.txt
+  226  ansible-vault view creds.txt
+  227  cat creds.txt
+  228  cd
+  229  ll
+  230  rm -rf *
+  231  vim playbook.yml
+  232  ll
+  233  ansible-vault encrypt playbook.yml
+  234  ansible-playbook playbook.yml
+  235  cat playbook.yml
+  236  vim playbook1.yml
+  237  ansible-playbook playbook1.yml
+  238  vim playbook1.yml
+  239  ansible-playbook playbook1.yml
+  240  vim playbook1.yml
+  241  rm -rf playbook.yml
+  242  vim creds.txt
+  243  cat creds.txt
+  244  vim playbook1.yml
+  245  ansible-playbook playbook1.yml
+  246  vim playbook1.yml
+
