@@ -1,0 +1,82 @@
+DAY-01:
+
+MONOLITHIC:
+SINGLE=APPLICATION, SERVER AND DATABASE &  MULTIPLE=SERVICES
+MICROSERVICES:
+MULTIPLE=SERVICES, SERVERS AND DATABASE &  SINGLE=APPLICATION
+
+WHY ?
+1. IF SOME THING WRONG WITH ONE SERVICE WE NEED TO STOP ENTIRE APPLICATION
+THEN ALL OTHER SERVIVCES ALSO STOPPED.
+2. DB ISSUES
+
+SERVER = CONTAINERS
+
+
+CONATINERS:
+Its a light weighted used to create,manage & deploy applications.
+it will not have os/packages, we need to install them from images.
+to crate container we are using the docker.
+
+DOCKER:
+it is a tool used to create containers.
+written on go lang.
+release: 2013
+written: solomen hykes and sebastian phal.
+its a free, opensource tool and platform independent.
+it helps to containarize the application.
+
+Containarization:
+packing application(pubg) along with its dependencies(maps).
+os level of virtualization.
+
+ARCHITECURE:
+
+Client --- > daemon -- > registry
+you --- > mom --- > dad
+
+CLIENT: it will interact with us. takes commands and excutes 
+HOST: where we install docker (windows, linux, macos)
+DAEMON: A background service which manages all the docker componets 
+REGISTRY: its a central platform which contains all the images
+
+image (os/packages) --- > yes --- > container
+
+INSTALLATION:
+yum install docker -y
+systemctl start docker
+systemctl status docker
+docker version
+
+
+docker images			: to see images
+docker pull amamzonlinux	: to download image
+docker run -it --name cont1 amamzonlinux: to create a container from amamzonlinux image
+
+yum install git maven httpd -y
+
+ctrl p q	: to exit from container
+docker container ls : to show list of container (docker ps -a)
+docker start cont_name : to start contianer
+docker attach cont_name : to go inside contianer
+docker stop cont_name : to start contianer
+
+HISTORY:
+
+ 1  yum install docker -y
+    2  docker version
+    3  systemctl start docker
+    4  docker version
+    5  docker images
+    6  docker pull amazonlinux
+    7  docker image
+    8  docker images
+    9  docker run -it --name cont1 amazonlinux
+   10  docker ps -a
+   11  docker container ls
+   12  docker start cont1
+   13  docker attach cont1
+   14  docker ps -a
+   15  docker stop cont1
+   16  history
+
