@@ -78,5 +78,154 @@ HISTORY:
    13  docker attach cont1
    14  docker ps -a
    15  docker stop cont1
-   16  history
 
+=================================================================
+
+day-02: custom images, Dockerfile, Deployment
+
+
+CUSTOM IMAGES:
+maual method:
+docker run -it --name cont1 ubuntu
+apt update -y
+apt install apache2 maven tree -y
+touch file{1..10}
+ctrl p q : to exit
+
+to create image form cont: docker commit cont1 image_name
+
+docker run -it --name cont1 image_name
+verify all the files and pkgs
+
+
+automation:
+DOCKER FILE:
+its an automation way of creating out custom images.
+components in docker file is always captial.
+in Dockerfile D is capital
+
+
+FROM: used for base image
+RUN: used to run commands (during image creation)
+CMD: used to run commands (during container creation)
+ENTRYPOINT: more priority than cmd.
+COPY: used to copy local files
+ADD: used to copy files from internet.
+WORKDIR: used to set default dir for cont
+LABEL: used to attach labels (name, email ----)
+ENV: used to set env variables (work inside cont)
+ARGS: used to set variables (work outside cont)
+VOLUME: used to attach volume to cont
+EXPOSE: to give port numbers
+
+TO RUN DOCKERFILE: docker build -t image:v1 .
+TO CREATE CONT: docker run -it --name cont1 image:v1 
+
+docker inspect cont_name : to show full info of container
+docker inspect cont6 | grep -i author
+
+EX-1:
+
+FROM ubuntu
+RUN apt update -y
+RUN apt install apache2 maven tree -y
+RUN touch file{1..10}
+
+EX-2:
+
+FROM ubuntu
+RUN apt update -y
+RUN apt install apache2 maven tree -y
+RUN touch file{1..10}
+CMD apt install mysql-server -y
+
+
+EX-3:
+
+FROM ubuntu
+RUN apt update -y
+RUN apt install apache2 maven tree -y
+RUN touch file{1..10}
+COPY raham.txt /tmp
+ADD http://dlcdn.apache.org/tomcat/tomcat-9/v9.0.78/bin/apache-tomcat-9.0.78.tar.gz /tmp
+
+
+EX-4:
+FROM ubuntu
+RUN apt update -y
+RUN apt install apache2 maven tree -y
+RUN touch file{1..10}
+COPY raham.txt /tmp
+ADD http://dlcdn.apache.org/tomcat/tomcat-9/v9.0.78/bin/apache-tomcat-9.0.78.tar.gz /tmp
+WORKDIR /tmp
+LABEL author rahamshaik
+ENV client swiggy
+ENV server Prod
+
+
+NETFLIX DEPLOYMENT:
+yum install git -y
+git clone https://github.com/CleverProgrammers/pwj-netflix-clone.git
+cd pwj-netflix-clone/
+vim Dockerfile
+
+FROM ubuntu
+RUN apt-get update -y
+RUN apt-get install apache2 -y
+COPY . /var/www/html/
+CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]
+
+
+docker build -t netflix:v1 .
+docker run -itd --name netflix1 -p 81:80 netflix:v1
+
+HISTORY:
+
+ 1  yum update -y
+    2  yum install dockrer -y
+    3  yum install docker -y
+    4  service docker start
+    5  service docker status
+    6  docker version
+    7  docker pull ubuntu
+    8  docker images\
+    9  docker ps
+   10  docker attach cont1
+   11  docker ps
+   12  docker images
+   13  docker commit cont1 raham:v1
+   14  docker images
+   15  docker run -it --name cont2 raham:v1
+   16  docker ps
+   17  vim Dockerfile
+   18  cat Dockerfile
+   19  docker build -t raham:v2 .
+   20  docker images
+   21  docker run -it --name cont3 raham:v2
+   22  vim Dockerfile
+   23  docker build -t raham:v3 .
+   24  docker run -it --name cont4 raham:v3
+   25  vim raham.txt
+   26  ll
+   27  vim Dockerfile
+   28  docker build -t raham:v4 .
+   29  docker run -it --name cont5 raham:v4
+   30  vim Dockerfile
+   31  docker build -t raham:v5 .
+   32  docker run -it --name cont6 raham:v5
+   33  docker inspect cont6
+   34  docker inspect cont6 | grep -i label
+   35  docker inspect cont6 | grep -i labels
+   36  docker inspect cont6 | grep -i author
+   37  vim Dockerfile
+   38  docker build -t raham:v6 .
+   39  docker run -it --name cont7 raham:v6
+   40  yum install git -y
+   41  git clone https://github.com/CleverProgrammers/pwj-netflix-clone.git
+   42  cd pwj-netflix-clone/
+   43  ll
+   44  vim Dockerfile
+   45  docker build -t netflix:v1 .
+   46  docker run -itd --name netflix netflix:v1
+   47  docker run -itd --name netflix1 -p 81:80 netflix:v1
+   48  history
