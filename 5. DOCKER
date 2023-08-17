@@ -229,3 +229,133 @@ HISTORY:
    46  docker run -itd --name netflix netflix:v1
    47  docker run -itd --name netflix1 -p 81:80 netflix:v1
    48  history
+============================================================================
+
+VOLUMES:
+it is a folder inside the container.
+volume store the data in container.
+we can share volume from one container to another conatiner.
+single volume can be shared to multiple containers.
+at a time we can share only one volume.
+
+
+1. DOCKER FILE
+
+FROM ubuntu
+VOLUME ["/vol1"]
+
+
+docker build -t raham:v1 .
+docker run -it --name cont1 raham:v1
+cd /vol1
+touch file{1..10}
+
+to share the vol: docker run -it --name cont2 --volumes-from cont1 --privileged=true ubuntu
+
+
+2. FROM CLI:
+
+docker run -it --name cont3 -v /vol2 ubuntu
+cd /vol2
+touch file{1..10}
+to share the vol: docker run -it --name cont4 --volumes-from cont3 --privileged=true ubuntu
+
+
+3. MOUNTING:
+
+docker volume create vol3
+docker volume ls
+docker volume inspect vol3
+docker volume rm vol4
+
+cd /var/lib/docker/volumes/vol3/_data
+touch file{1..10}
+
+docker run -it --name cont5 --mount source=vol3,destination=/abc ubuntu
+cd /vol3
+touch file{11..20}
+exit
+
+cp * /root	: to copy files from volume path to local path
+
+NOTE: we cant delete attached volume.
+
+======================================
+docker system commands:
+docker system df	: to check the size of docker components
+docker system df -v	: to check the size of docker components individaully
+
+JENKINS SETUP ON DOCKER:
+docker run -it --name jenkisnci -p 8080:8080 jenkins/jenkins:lts
+
+
+
+HISTORY:
+
+1  vim Dockerfile
+    2  docker build -t raham:v1 .
+    3  yum install docker -y && systemctl start docker
+    4  docker build -t raham:v1 .
+    5  docker run -it --name cont1 raham:v1 
+    6  docker ps 
+    7  docker run -it --name cont2 --volumes-from cont1 --privileged=true ubuntu
+    8  docker attach cont1
+    9  docker run -it --name cont3 -v /vol2 ubuntu
+   10  docker run -it --name cont4 --volumes-from cont3 --privileged=true ubuntu 
+   11  docker volume create vol3
+   12  docker volume ls
+   13  docker volume inspect vol3
+   14  cd /var/lib/docker/volumes/vol3/_data
+   15  touch python{1..5}
+   16  ll
+   17  docker run -it --name cont5 --mount source=vol3,dest=/vol3 ubuntu
+   18  docker run -it --name cont5 --mount source=vol3 dest=/vol3 ubuntu
+   19  docker run -it --name cont5 --mount "source=vol3,dest=/vol3" ubuntu
+   20  docker run -it --name cont5 --mount "src=vol3,dest=/vol3" ubuntu
+   21  docker run -it --name cont5 --mount "src=vol3 dest=/vol3" ubuntu
+   22  docker run -it --name cont5 --mount "src=/vol3 dest=/vol3" ubuntu
+   23  docker run -it --name cont5 --mount source=/vol3,destination=/vol3 ubuntu
+   24  docker run -it --name cont5 --mount source=vol3,destination=/vol3 ubuntu
+   25  ll
+   26  cp * /root/
+   27  ls
+   28  cd /root/
+   29  ll
+   30  rm -rf p*
+   31  ls
+   32  cd /home/
+   33  ls
+   34  touch java{1..10}
+   35  ll
+   36  docker inspect vol3
+   37  cp * /var/lib/docker/volumes/vol3/_data
+   38  cp * /var/lib/docker/volumes/vol3/_data -R
+   39  cd /var/lib/docker/volumes/vol3/_data
+   40  ls
+   41  docker attach cont5
+   42  cd /root/
+   43  touch php{1..10}
+   44  cp * /var/lib/docker/volumes/vol3/_data
+   45  cd /var/lib/docker/volumes/vol3/_data
+   46  ls
+   47  docker attach cont5
+   48  docker volume create vol4
+   49  docker inspect vol4
+   50  docker volume create vol4
+   51  docker volume ls
+   52  docker volume rm vol4
+   53  docker volume 
+   54  docker volume rm vol3
+   55  docker system -df
+   56  docker system -v
+   57  docker system df 
+   58  docker system df -v
+   59  docker system df --format json
+   60  docker system df --format=json
+   61  docker system df --format=yaml
+   62  docker system df --format
+   63  docker system df --help
+   64  docker system df --format string
+   65  docker system df --format "json"
+   66  docker run -it --name jenkisnci -p 8080:8080 jenkins/jenkins:lts
+   67  history
