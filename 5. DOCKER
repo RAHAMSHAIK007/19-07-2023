@@ -359,3 +359,203 @@ HISTORY:
    65  docker system df --format "json"
    66  docker run -it --name jenkisnci -p 8080:8080 jenkins/jenkins:lts
    67  history
+========================================================================
+
+TO REMOVE ALL CONTS:
+STOP: docker stop $(docker ps -a -q)
+REMOVE: docker rm $(docker ps -a -q
+TO REMOVE ALL IMAGES:
+docker rmi -f $(docker images -q)
+
+Dockerfile:
+FROM ubuntu
+RUN apt-get update -y
+RUN apt-get install apache2 -y
+COPY index.html /var/www/html/
+CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]
+
+docker build -t img:v1 .
+docker run -itd --name cont1 img:v1 
+
+DOCKER COMPOSE:
+its a tool used to create multiple containers together.
+inside containers we create services.
+its a text file with yaml fromat.
+yaml works on key-value pair.
+inside this file we can describe images, ports, volume, replicas and networks.
+Default file is: docker-compose.yml (or) compose.yml (yml=yaml)
+
+INSTALL:
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+ls /usr/local/bin/
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose version
+
+
+
+version: '3.8'
+services:
+  movies:
+    image: raham:movies
+    ports:
+      - "81:80"
+  train:
+    image: raham:train
+    ports:
+      - "82:80"
+
+
+
+version: '3.8'
+services:
+  movies:
+    image: raham:movies
+    ports:
+      - "81:80"
+  train:
+    image: raham:train
+    ports:
+      - "82:80"
+  dth:
+    image: raham:dth
+    ports:
+      - "83:80"
+  recharge:
+    image: raham:recharge
+    ports:
+      - "84:80"
+
+
+docker-compose up -d	: to run containers on compose files 
+docker-compose stop	: to stop containers on compose file
+docker-compose start	: to start containers on compose file
+docker-compose pause	: to pause containers on compose file
+docker-compose unpause	: to unpause containers on compose file
+docker-compose down	: to delete containers on compose file
+docker-compose ps	: to list containers created from compose file
+docker-compose images	: to list images used on compose file
+docker-compose logs	: to show logs of compose
+
+CHANGING THE DEFAULT FILE:
+rename docker-compose file to raham.yml and run below command
+docker-compose -f raham.yml down
+
+
+DOCKERHUB:
+its a central repo where we can store images
+
+docker login
+docker tag image:v1 username/repo
+docker push username/repo
+
+docker tag raham:recharge laxmisrikar99/recharge
+docker push laxmisrikar99/recharge
+
+HISTORY:
+
+  68  docker images
+   69  docker ps -a
+   70  docker ps -a -q
+   71  docker stop $(docker ps -a -q)
+   72  docker rm $(docker ps -a -q)
+   73  docker ps -a
+   74* docker images
+   75  docker images
+   76  vim Dockerfile
+   77  vim index.html
+   78  docker build -t raham:movies .
+   79  docker run -it --name movies -p 81:80 raham:movies
+   80  docker ps -a
+   81  vim Dockerfile
+   82  docker rm 8260498a3f5d
+   83  docker run -it --name movies -p 81:80 raham:movies
+   84  docker ps -a
+   85  vim index.html
+   86  docker build -t raham:train .
+   87  docker run -itd --name train -p 82:80 raham:train
+   88  vim index.html
+   89  docker build -t raham:dth .
+   90  docker run -itd --name dth -p 83:80 raham:dth
+   91  vim index.html
+   92  docker build -t raham:recharge .
+   93  docker run -itd --name recharge -p 84:80 raham:recharge
+   94  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+   95  ls /usr/local/bin/
+   96  sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+   97  sudo chmod +x /usr/local/bin/docker-compose
+   98  docker-compose version
+   99  vim docker-compose.yml
+  100  docker version
+  101  vim docker-compose.yml
+  102  docker stop $(docker ps -a -q)
+  103  docker rm $(docker ps -a -q)
+  104  docker ps -a
+  105  cat docker-compose.yml
+  106  docker images
+  107  docker-compose up -d
+  108  docker ps -a
+  109  vim docker-compose.yml
+  110  cat docker-compose.yml
+  111  docker-compose up -d
+  112  docker ps -a
+  113  cat Dockerfile
+  114  cat docker-compose.yml
+  115  docker ps -a
+  116  docker-compose stop
+  117  docker ps -a
+  118  docker-compose start
+  119  docker ps -a
+  120  docker-compose pause
+  121  docker ps -a
+  122  docker-compose unpause
+  123  docker ps -a
+  124  docker-compose down
+  125  docker ps -a
+  126  docker-compose up -d
+  127  docker ps -a
+  128  docker run -itd --name cont1 ubuntu
+  129  docker run -itd --name cont2 ubuntu
+  130  docker run -itd --name cont3 ubuntu
+  131  docker ps -a
+  132  docker-compose ps
+  133  docker images
+  134  docker-compose images
+  135  docker-compose logs
+  136  docker-compose down
+  137  mv docker-compose.yml compose.yml
+  138  ll
+  139  rm -rf php*
+  140  ll
+  141  docker-compose up -d
+  142  mv compose.yml raham.yml
+  143  docker-compose down
+  144  docker-compose down -c raham.yml
+  145  docker-compose down compose.yml -c raham.yml
+  146  docker-compose compose.yml -c raham.yml down
+  147  docker-compose -f raham.yml down
+  148  docker images
+  149  docker tag raham:movie laxmisrikar99
+  150  /
+  151  docker tag raham:movies laxmisrikar99/movies
+  152  docker images
+  153  docker pus laxmisrikar99/movies
+  154  docker push laxmisrikar99/movies
+  155  docker login
+  156  docker push laxmisrikar99/movies
+  157  docker images
+  158  docker tag raham:train laxmisrikar99/tarin
+  159  docker push laxmisrikar99/tarin
+  160  docker tag raham:dth laxmisrikar99/dth
+  161  docker push laxmisrikar99/dth
+  162  docker tag raham:recharge laxmisrikar99/recharge
+  163  docker push laxmisrikar99/recharge
+  164  docker rmi -f $(docker images -q)
+  165  docker images
+  166  docker stop $(docker ps -a -q)
+  167  docker rm $(docker ps -a -q)
+  168  docker images
+  169  docker ps -a
+  170  docker run -itd --name dth -p 81:80 laxmisrikar99/dth:latest
+  171  docker ps -a
+  172  history
