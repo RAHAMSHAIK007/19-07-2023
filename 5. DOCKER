@@ -357,7 +357,7 @@ HISTORY:
    63  docker system df --help
    64  docker system df --format string
    65  docker system df --format "json"
-   66  docker run -it --name jenkisnci -p 8080:8080 jenkins/jenkins:lts
+   66  docker run -it --name jenkinsci -p 8080:8080 jenkins/jenkins:lts
    67  history
 ========================================================================
 
