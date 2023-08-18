@@ -374,6 +374,8 @@ RUN apt-get install apache2 -y
 COPY index.html /var/www/html/
 CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]
 
+CODE FOR INDEX.HTML: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_form_icon
+
 docker build -t img:v1 .
 docker run -itd --name cont1 img:v1 
 
