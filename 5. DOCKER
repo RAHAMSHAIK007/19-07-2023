@@ -561,3 +561,159 @@ HISTORY:
   170  docker run -itd --name dth -p 81:80 laxmisrikar99/dth:latest
   171  docker ps -a
   172  history
+
+=======================================================================================
+
+DOCKER SWARM:
+Is an orchestration service.
+we use to manage multiple containers.
+we can create multiple containers on multiple servers.
+if a container is not working on server-1 we can access form server-2.
+
+we need to create master and worker nodes.
+operations we perform on master node.
+from master node the conatiners are distributed to worker nodes.
+master node is connection to workernode with token.
+we need to install docker engine.
+
+ADVANTGAGES:
+1. HIGH AVAILABILTY
+2. SELF HEALING
+3. REPLICAS
+
+working:
+create 3 server and install & start docker.
+note: give all traffic
+
+
+sudo -i
+hostnamectl set-hostname manager/worker-1/worker-2/
+sudo -i
+
+yum install docker -y
+systemctl start docker
+systemctl status docker
+
+Generate a token to connect with worker nodes: (run this on manager)
+docker swarm init --advertise-addr 172.31.33.115 (private-ip manager)
+
+copy the token to worker nodes:
+
+verify: docker node ls
+
+service: 
+a feature of application.
+with the help of service we can create conatiners.
+replicas: copy of a container
+
+docker service create --name movies --replicas 3 --publish 82:80 laxmisrikar99/movies:latest
+
+docker service ls		: TO list services
+docker service ps dth		: list the dth containers with nodes as well
+docker service scale dth=10	: to scale the containers
+docker service scale dth=5	: to scale the containers
+docker service inspect dth	: to show complete info
+docker service logs dth		: to show complete events
+docker service rollback dth	: to go back to previous stage
+docker service rm dth		: to remove the service
+
+
+CLUSTER ACTIVES:
+docker swarm leave   : to detach worker node from cluster (execute on worker)
+to attach node again : copy the token on worker node again
+docker node rm node_id: to remove permanently (execute on manager)
+to generate toke     : docker swarm join-token manager (execute on manager)
+
+
+=================================================
+
+DOCKER NETWORK: its used to connect our containers.
+
+
+BRIDGE NETWORK: to communicate container running on same server.
+HOST NETWORK: uses host ip as containers.
+NONE NETWORK: containers will not expose here.
+OVERLAY NETWORK: to communicate containers running on multiple server.
+
+docker network create raham	: to create network
+docker network ls 		: to list networks
+docker network connect raham cont3: to connect cont3 with raham n/w
+docker network connect raham cont3: to discommect cont3 with raham n/w
+docker network rm raham	: to remove raham n/w
+
+
+TO CHECK COMMINICATION:
+docker attach cont1
+apt update -y
+apt install iputils-ping -y
+ping private-ip of cont2 (get ip by using inspect command)
+
+HISTORY:
+
+
+  1  yum install docker -y
+    2  systemctl start docker
+    3  systemctl status docker
+    4  docker swarm init --advertise-addr 172.31.33.115
+    5  docker node ls
+    6  docker swarm init --advertise-addr 172.31.33.115
+    7  docker node ls
+    8* docker service create --name dth --replicas 3 --publish 81:80 laxmisrikar99/dth:lat
+    9  docker service create --name movies --replicas 3 --publish 82:80 laxmisrikar99/movies:latest
+   10  docker service ls
+   11  docker service ps dth
+   12  docker service scale dth=10
+   13  docker service ps dth
+   14  docker service scale dth=5
+   15  docker service ps dth
+   16  docker service
+   17  docker service inspect dth
+   18  docker service stop dth
+   19  docker service logs dth
+   20  docker service rollback dth
+   21  docker service ps dth
+   22  docker service rollback dth
+   23  docker service rm dth
+   24  docker service ps dth
+   25  docker service ls
+   26  docker node ls
+   27  docker service ps movies
+   28  docker service ls
+   29  docker node ls
+   30  docker noder rm vp9qx7u1xozbwt3mdypee1h60
+   31  docker node rm vp9qx7u1xozbwt3mdypee1h60
+   32  docker node ls
+   33  docker node rm okt0og75ogm69swawyw0x9pfr
+   34  docker node ls
+   35  docker node rm okt0og75ogm69swawyw0x9pfr
+   36  docker node ls
+   37  docker swarm join-token manager
+   38  docker node ls
+   39  docker network ls
+   40  docker service rm movies
+   41  docker ps -a
+   42  docker service ls
+   43  docker ps -a
+   44  docker network create raham
+   45  docker network ls
+   46  docker run -itd --name cont1 ubuntu
+   47  docker run -itd --name cont2 ubuntu
+   48  docker ps -a
+   51  docker network connect raham cont1
+   52  docker network inspect raham
+   53  docker network connect raham cont2
+   54  docker network inspect raham
+   55  docker run -itd --name cont3 ubuntu
+   56  docker network connect raham cont3
+   57  docker network inspect raham
+   58  docker attach cont1
+   59  docker attach cont2
+   60  docker network disconnect raham cont3
+   61  docker network inspect raham
+   62  docker network disconnect raham cont2
+   63  docker network inspect raham
+   64  docker network rm raham
+   65  docker network disconnect raham cont1
+   66  docker network rm raham
+   67  history
+
