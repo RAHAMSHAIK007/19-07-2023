@@ -1,0 +1,137 @@
+DAY-01
+
+K8S:
+
+ARCHITECTURE:
+CLUSTER
+NODES
+PODS
+CONTAINERS
+APPLICATION
+
+
+MASTER NODE:
+1. API SERVER: Communicate with user, it takes command and gives op.
+2. ETCD: it is db for cluster,it stores all info about cluster.
+3. kube-scheduler: schedule pods on worker nodes.
+4. controller: controls the k8s components.
+
+
+WOKRER NODE:
+kubelet: its an agent which communicate with master.
+kubeproxy: deals with networking of pods in cluster.
+pods: group of containers.
+container engine: creates containers
+
+TYPES OF K8S CLUSTER:
+1. SELF MANAGED:
+A. KOPS
+B. KUBEADM
+C. MINIKUBE
+
+
+2. CLOUD MANAGED:
+A. AKS
+B. GKS
+C. EKS
+
+
+MINIKUBE:
+It is a tool used to setup single node cluster on K8's. 
+It contains API Servers, ETDC database and container runtime
+It helps you to containerized applications.
+It is used for development, testing, and experimentation purposes on local. Here Master and worker runs on same machine
+It is a platform Independent.
+By default it will create one node only.
+Installing Minikube is simple compared to other tools.
+
+NOTE: But we dont implement this in real-time
+
+REQUIRMENTS:
+2 CPUs or more
+2GB of free memory
+20GB of free disk space
+Internet connection
+Container or virtual machine manager, such as: Docker.
+
+
+STEUP:
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt install curl wget apt-transport-https -y
+sudo curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo mv minikube-linux-amd64 /usr/local/bin/minikube
+sudo chmod +x /usr/local/bin/minikube
+sudo minikube version
+sudo curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+sudo echo "$(cat kubectl.sha256) kubectl" | sha256sum --check
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+sudo minikube start --driver=docker --force
+
+
+KUBECTL: 
+kubectl is the CLI which is used to interact with a Kubernetes cluster.
+We can create, manage pods, services, deployments, and other resources We can also monitoring, troubleshooting, scaling and updating the pods. To perform these tasks it communicates with the Kubernetes API server. It has many options and commands, to work on.
+The configuration of kubectl is in the $HOME/.kube directory.
+The latest version is 1.27
+
+PODS:
+It is a smallest unit of deployment in K8's.
+It is a group of containers.
+Pods are ephemeral (short living objects)
+Mostly we can use single container inside a pod but if we required, we can create multiple containers inside a same pod.
+when we create a pod, containers inside pods can share the same network namespace, and can share the same storage volumes .
+While creating pod, we must specify the image, along with any necessary configuration and resource limits.
+K8's cannot communicate with containers, they can communicate with only pods.
+ We can create this pod in two ways, 
+1. Imperative(command) 
+2. Declarative (Manifest file)
+
+
+IMPERATIVE: using commands
+kubectl run pod1 --image rahamshaik/rechargepaytm:latest
+kubectl get pods
+kubectl get pods -o wide
+kubectl describe pods pod1
+kubectl delete pods pod1
+
+DECLARTIVE: using files (manifest)
+
+vim pod.yml
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod1
+spec: 
+  containers:
+  - name: cont1
+    image: rahamshaik/rechargepaytm:latest
+
+
+kubectl create -f pod.yml
+
+HISTORY:
+1  vim minikube.sh
+    2  vim minikube.sh
+    3  sh minikube.sh
+    4  cat minikube.sh
+    5  ls -al
+    6  kubectl run pod1 --image rahamshaik/rechargepaytm:latest
+    7  kubectl get pods
+    8  kubectl get pods -o wide
+    9  kubectl describe pod pod1
+   10  kubectl delete pod pod1
+   11  vim pod.yml
+   12  kubectl create -f pod.yml
+   13  vim pod.yml
+   14  kubectl create -f pod.yml
+   15  kubectl get po
+   16  kubectl get po -o wide
+   17  kubectl describe pod pod1
+   18  kubectl delete pod pod1
+   19  history
