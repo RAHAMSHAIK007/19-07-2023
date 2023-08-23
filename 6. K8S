@@ -135,3 +135,166 @@ HISTORY:
    17  kubectl describe pod pod1
    18  kubectl delete pod pod1
    19  history
+
+=================================================================================
+
+
+LABLE: assing to a pod for identification.
+SELECTOR: used to identify the pod with same label.
+
+
+REPLICASET:
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  labels:
+    app: swiggy
+  name: swiggy-rs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: swiggy
+  template:
+    metadata:
+      labels:
+        app: swiggy
+    spec:
+      containers:
+      - name: cont1
+        image: nginx
+
+kubectl create -f abc.yml
+
+kubectl get rs
+kubectl get rs -o wide
+kubectl describe rs swiggy-rs
+kubectl delete rs swiggy-rs
+kubectl edit rs/swiggy-rs
+
+
+
+SCALING: 
+
+SCALE-IN: Increasing the count of pods
+kubectl scale rs/swiggy-rs --replicas=10
+
+SCALE-OUT: Decreasing the count of pods
+kubectl scale rs/swiggy-rs --replicas=5
+
+
+DEPLOYMENT:
+it will do all operations link RS.
+it will do roll back which cannot be done in rs.
+
+rs -- > pods
+deployment -- > rs -- > pods
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: swiggy
+  name: swiggy-rs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: swiggy
+  template:
+    metadata:
+      labels:
+        app: swiggy
+    spec:
+      containers:
+      - name: cont1
+        image: nginx
+
+kubectl get deploy
+kubectl get deploy -o wide
+kubectl describe deploy swiggy-rs
+kubectl edit deploy/swiggy-rs
+kubectl delete deploy swiggy-rs
+
+HISTORY:
+ 1  vim minikube.sh
+    2  sh minikube.sh
+    3  kubectl run pod1 --image nginx
+    4  kubectl delete pod pod1
+    5  kubectl get po
+    6  vim abc.yml
+    7  ll
+    8  kubectl create -f abc.yml
+    9  kubectl get po
+   10  kubectl get pods
+   11  kubectl get po
+   12  kubectl delete pod swiggy-rs-7w6wv
+   13  kubectl get po
+   14  kubectl delete pod swiggy-rs-gnp9q
+   15  kubectl get po
+   16  vim abc.yml
+   17  kubectl get po
+   18  kubectl get po -o wide
+   19  kubectl api-resources
+   20  kubectl get rs
+   21  kubectl get rs -o wide
+   22  vim abc.yml
+   23  kubectl describe rs swiggy-rs
+   24  kubectl scale rs/swiggy-rs --replicas=10
+   25  kubectl get po
+   26  kubectl describe rs swiggy-rs
+   27  kubectl get po --show labels
+   28  kubectl get po show --labels
+   29  kubectl get po  --labels
+   30  kubectl get po --help
+   31  kubectl get po -l
+   32  kubectl get po show -l
+   33  kubectl get pods -l app=swiggy
+   34  kubectl run pod1 --image nginx
+   35  kubectl run pod2 --image nginx
+   36* kubectl run pod3 --image ngin
+   37  kubectl get pods -l app=swiggy
+   38  kubectl scale rs/swiggy-rs --replicas=5
+   39  kubectl get po
+   40  kubectl scale rs/swiggy-rs --replicas=15
+   41  kubectl get po
+   42  kubectl scale rs/swiggy-rs --replicas=5
+   43  kubectl edit rs/swiggy-rs
+   44  kubectl describe rs swiggy-rs
+   45  kubectl get po
+   46  kubectl scale rs/swiggy-rs --replicas=7
+   47  kubectl get po
+   48  kubectl describe pod swiggy-rs-6gsbg
+   49  kubectl edit rs/swiggy-rs
+   50  kubectl describe pod swiggy-rs-6gsbg
+   51  kubectl get po
+   52  kubectl describe pod swiggy-rs-hcdst
+   53  kubectl describe rs swiggy-rs
+   54  kubectl get po
+   55  kubectl describe pod swiggy-rs-pnpkl
+   56  kubectl get po
+   57  kubectl describe po swiggy-rs-6gsbg
+   58  kubectl delete rs swiggy-rs
+   59  kubectl get po
+   60  kubectl delete po pod1 pod2 pod3
+   61  vim minikube.sh
+   62  vim abc.yml
+   63  kubectl create -f abc.yml
+   64  kubectl get deploy
+   65  kubectl get rs
+   66  kubectl get po
+   67  kubectl describe deploy swiggy-rs
+   68  kubectl edit deploy/swiggy-rs
+   69  kubectl describe deploy swiggy-rs
+   70  kubectl edit deploy/swiggy-rs
+   71  kubectl describe deploy swiggy-rs
+   72  kubectl get po
+   73  kubectl describe pod swiggy-rs-54997d9b8d-9zxlm
+   74  kubectl describe pod swiggy-rs-54997d9b8d-jls4x
+   75  kubectl describe pod swiggy-rs-54997d9b8d-s69bx
+   76  kubectl scale deploy/swiggy-rs --replicas=10
+   77  kubectl get po
+   78  kubectl delete deploy swiggy-rs
+   79  cat abc.yml
+   80  history
