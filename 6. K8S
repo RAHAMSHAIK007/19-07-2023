@@ -298,3 +298,96 @@ HISTORY:
    78  kubectl delete deploy swiggy-rs
    79  cat abc.yml
    80  history
+=====================================
+
+KOPS:
+
+Minikube -- > single node cluster
+All the pods on single node 
+kOps, also known as Kubernetes operations, is an open-source tool that helps you create, destroy, upgrade, and maintain a highly available, production-grade Kubernetes cluster. 
+Depending on the requirement, kOps can also provide cloud infrastructure.
+kOps is mostly used in deploying AWS and GCE Kubernetes clusters. 
+But officially, the tool only supports AWS. 
+Support for other cloud providers (such as DigitalOcean, GCP, and OpenStack) are in the beta stage.
+
+ADVANTAGES:
+•	Automates the provisioning of AWS and GCE Kubernetes clusters
+•	Deploys highly available Kubernetes masters
+•	Supports rolling cluster updates
+•	Autocompletion of commands in the command line
+•	Generates Terraform and CloudFormation configurations
+•	Manages cluster add-ons.
+•	Supports state-sync model for dry-runs and automatic idempotency
+•	Creates instance groups to support heterogeneous clusters
+ALTERNATIVES:
+Amazon EKS , MINIKUBE, KUBEADM, RANCHER, TERRAFORM, HELM.
+
+SETUP:
+
+keys -- > iam -- > user -- > craete users -- > name: kops -- > attach polocies directly -- > AdministratorAccess -- > next -- > create 
+select user -- > security credentials -- > Access keys -- > create Access keys 
+-- > cli -- > confirm -- > crearte Access keys -- > download file
+
+
+KOPS SCRIPT:
+
+#vim .bashrc
+#export PATH=$PATH:/usr/local/bin/
+#source .bashrc
+
+
+#! /bin/bash
+aws configure
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+wget https://github.com/kubernetes/kops/releases/download/v1.25.0/kops-linux-amd64
+chmod +x kops-linux-amd64 kubectl
+mv kubectl /usr/local/bin/kubectl
+mv kops-linux-amd64 /usr/local/bin/kops
+
+aws s3api create-bucket --bucket saurabh99.k8s.local --region us-east-1
+aws s3api put-bucket-versioning --bucket saurabh99.k8s.local --region us-east-1 --versioning-configuration Status=Enabled
+export KOPS_STATE_STORE=s3://saurabh99.k8s.local
+kops create cluster --name rahams.k8s.local --zones us-east-1a --master-count=1 --master-size t2.medium --node-count=2 --node-size t2.micro
+kops update cluster --name rahams.k8s.local --yes --admin
+
+HISTORY:
+
+
+    1  vim .bashrc
+    2  source .bashrc
+    3  vim kops.sh
+    4  sh kops.sh
+    5  ps
+    6  sh kops.sh
+    7  ll
+    8  rm -rf kops-linux-amd64.1
+    9  sh kops.sh
+   10  vim kops.sh
+   11  sh kops.sh
+   12  cat .aws/config
+   13  vim .aws/config
+   14  vim kops.sh
+   15  sh kops.sh
+   16  vim .aws/config
+   17  vim kops.sh
+   18  sh kops.sh
+   19  cat kops.sh
+   20  export KOPS_STATE_STORE=s3://saurabh99.k8s.local
+   21  kops validate cluster --wait 10m
+   22  kops get cluster
+   23  kubectl get no
+   24  vim rs.yml
+   25  kubectl create -f rs.yml
+   26  kubectl get po
+   27  kubectl get po -o wide
+   28  kubectl scale rs/swiggy-rs --replicas=6
+   29  kubectl deploy rs/swiggy-rs --replicas=6
+   30  kubectl scale deploy/swiggy-rs --replicas=6
+   31  kubectl get po -o wide
+   32  kubectl scale deploy/swiggy-rs --replicas=10
+   33  kubectl get po -o wide
+   34  kops get cluster
+   35  kops delete cluster --name rahams.k8s.local --yes
+   36  history
+
+
