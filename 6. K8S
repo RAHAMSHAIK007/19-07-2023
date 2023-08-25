@@ -390,4 +390,170 @@ HISTORY:
    35  kops delete cluster --name rahams.k8s.local --yes
    36  history
 
+============================================================
+
+Suggestions:
+ * list clusters with: kops get cluster
+ * edit this cluster with: kops edit cluster rahams.k8s.local
+ * edit your node instance group: kops edit ig --name=rahams.k8s.local nodes-us-east-1a
+ * edit your master instance group: kops edit ig --name=rahams.k8s.local master-us-east-1a
+
+ 
+cluster activites:
+to increase woker nodes:
+kops edit ig --name=rahams.k8s.local nodes-us-east-1a
+kops update cluster --name rahams.k8s.local --yes --admin
+kops rolling-update cluster
+
+to increase master nodes:
+kops edit ig --name=rahams.k8s.local master-us-east-1a
+kops update cluster --name rahams.k8s.local --yes --admin
+kops rolling-update cluster
+
+cluster level changes:
+kops edit cluster rahams.k8s.local
+
+NAMESPACES:
+
+NAMESPACE: It is used to divide the cluster to multiple teams on real time.
+it is used to isolate the env.
+
+CLUSTER: HOUSE
+NAMESPACES: ROOM
+
+Each namespace is isolated.
+if your are room-1 are you able to see room-2.
+we cant access the objects from one namespace to another namespace.
+
+
+TYPES:
+
+default           : Is the default namespace, all objects will create here only
+kube-node-lease   : it will store object which is taken from one namespace to another.
+kube-public	  : all the public objects will store here.      
+kube-system 	  : default k8s will create some objects, those are storing on this ns.
+
+kubectl get pod -n kube-system	: to list all pods in kube-system namespace
+kubectl get pod -n default	: to list all pods in default namespace
+kubectl get pod -n kube-public	: to list all pods in kube-public namespace
+kubectl get po -A		: to list all pods in all namespaces
+
+kubectl create ns dev	: to create namespace
+kubectl config set-context --current --namespace=dev : to switch to the namespace
+kubectl config view --minify | grep namespace : to see current namespace
+kubectl delete ns dev	: to delete namespace
+kubectl delete pod --all: to delete all pods
+
+
+NOTE: By deleting  the ns all objects also gets deleted.
+in real time we use rbac concept to restrict the access from one namespace to another.
+so users cant access/delete ns, because of the restriction we provide.
+we create roles and rolebind for the users.
+
+
+KUBECOLOR:
+
+wget https://github.com/hidetatz/kubecolor/releases/download/v0.0.25/kubecolor_0.0.25_Linux_x86_64.tar.gz
+tar -zxvf kubecolor_0.0.25_Linux_x86_64.tar.gz
+./kubecolor
+chmod +x kubecolor
+mv kubecolor /usr/local/bin/
+kubecolor get po
+
+
+HISTORY:
+  1  vim .bashrc
+    2  source .bashrc
+    3  vim kops.sh
+    4  vim kops.sh
+    5  sh kops.sh
+    6  cat kops.sh
+    7  export KOPS_STATE_STORE=s3://devopsbyraham0088.k8s.local
+    8  kops validate cluster --wait 10m
+    9  kops get cluster
+   10  kubectl get no
+   11   kops edit ig --name=rahams.k8s.local nodes-us-east-1a
+   12  kops update cluster --name rahams.k8s.local --yes
+   13  kops update cluster --name rahams.k8s.local --yes --admin
+   14  kops rolling-update cluster
+   15   kops edit ig --name=rahams.k8s.local nodes-us-east-1a
+   16  kops rolling-update cluster
+   17  kops update cluster --name rahams.k8s.local --yes --admin
+   18  kops rolling-update cluster
+   19   kops edit ig --name=rahams.k8s.local nodes-us-east-1a
+   20  kops update cluster --name rahams.k8s.local --yes --admin
+   21  kops rolling-update cluster
+   22  kops edit ig --name=rahams.k8s.local master-us-east-1a
+   23  kops update cluster --name rahams.k8s.local --yes --admin
+   24  kops rolling-update cluster
+   25  kops edit ig --name=rahams.k8s.local master-us-east-1a
+   26  kops update cluster --name rahams.k8s.local --yes --admin
+   27  kops rolling-update cluster
+   28  kops edit cluster rahams.k8s.local
+   29  kops rolling-update cluster
+   30  kubectl run pod1 --image nginx
+   31  kubectl describe pod pod1
+   32  kubectl get pod -A default
+   33  kubectl get pod -A
+   34  kubectl get pod
+   35  kubectl get pod -A
+   36  kubectl get pod -n kube-system
+   37  kubectl get pod -n default
+   38  kubectl get ns
+   39  kubectl create ns dev
+   40  kubectl get ns
+   41  kubectl get po
+   46  kubectl config set-context --current --namespace=dev
+   47  kubectl get po
+   48  kubectl config view --minify | grep namespace
+   49  kubectl run devpod1 --image nginx
+   50  kubectl run devpod2 --image nginx
+   51  kubectl run devpod3 --image nginx
+   52  kubectl get po
+   53  kubectl get po -A
+   54  kubectl get po -n default
+   55  kubectl delete pod pod1 -n default
+   58  kubectl config view --minify | grep namespace
+   59  kubectl get po
+   60  kubectl create ns test
+   61  kubectl config set-context --current --namespace=test
+   62  kubectl config view --minify | grep namespace
+   63  kubectl get po
+   64  kubectl get po -n dev
+   65  kubectl delete ns dev
+   66  kubectl get po -n dev
+   67  kubectl get ns
+   68  kubectl delete ns test
+   69  kubectl run pod1 --image nginx
+   70  kubectl config set-context --current --namespace=default
+   71  kubectl run pod1 --image nginx
+   72  kubectl run pod2 --image nginx
+   73  kubectl run pod3 --image nginx
+   74  kubectl run pod4 --image nginx
+   75  kubectl run pod5 --image nginx
+   76  kubectl get po
+   77  kubectl delete pod -n default
+   78  kubectl delete pod --all default
+   79  kubectl delete pod --help
+   80  kubectl delete pod --all
+   81  kubectl get po
+   82  kubectl get po  -A
+   83  wget https://github.com/hidetatz/kubecolor/releases/download/v0.0.25/kubecolor_0.0.25_Li                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               nux_x86_64.tar.gz
+   84  tar -zxvf kubecolor_0.0.25_Linux_x86_64.tar.gz
+   85  ./kubecolor
+   86  chmod +x kubecolor
+   87  mv kubecolor /usr/local/bin/
+   88  kubecolor get po
+   89  kubecolor get po -A
+   90  kubecolor get no
+   91  kops get cluster
+   92  kubecolor get cluster
+   93  kubecolor run pod1 --image nginx
+   94  kubecolor get po
+   95  kubecolor run pod2 --image rahamshaik/moviespaytm:latest
+   96  kubecolor get po
+   97  kubecolor run pod3 --image rahamshaik/movspaytm:latest
+   98  kubecolor get po
+   99  kops get cluster
+  100  kops delete cluster --name rahams.k8s.local --yes
 
