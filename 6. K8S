@@ -812,3 +812,89 @@ RESOURE MANAGEMENT OF DOCKER:
    80  docker stats
    81  docker stats --format "table {{.Container}}\t{{.MemUsage}}"
    82  history
+================================================
+
+HISTORY:
+
+ 1  sh abc.sh
+    2  vim abc.sh
+    3  sh abc.sh
+    4  ll
+    5  vi abc.sh
+    6  sh abc.sh
+    7  ll
+    8  vim .bashrc
+    9  source .bashrc
+   10  kubectl get svc
+   11  vim clusterip.yml
+   12  kubectl apply -f clusterip.yml
+   13  kubectl get deploy
+   14  kubectl get svc
+   15  kubectl describe svc sv1
+   16  kubectl delete -f clusterip.yml
+   17  vim clusterip.yml
+   18  kubectl create -f clusterip.yml
+   19  kubectl get svc,deploy
+   20  kubectl get po -o wide
+   21  kubectl delete -f clusterip.yml
+   22  vim clusterip.yml
+   23  kubectl create -f clusterip.yml
+   24  kubectl get svc,deploy
+   25  kubectl delete -f clusterip.yml
+   26  vim clusterip.yml
+   27  kubectl apply -f clusterip.yml
+   28  kubectl delete -f clusterip.yml
+   29  kubectl api-resources | grep ingress -i
+   30  vim ingress.yml
+   31  kubectl apply -f ingress.yml
+   32  kubectl get svc,po
+   33  kubectl get po -o wide
+   34  kubectl create ingress nginxsvc-ing --rule="/=fe:80" --rule="/welcome=newdep:8080"
+   35  kubectl get ing
+   36  kubectl describe ing
+   37  sudo vim /etc/host
+   38  kubectl get po -o wide
+   39  sudo vim /etc/host
+   40  ping raham.com
+   41  curl raham.com
+   42  curl raham.com/welcome
+   43  curl raham.com
+   44  kubectl get svc
+   45  kubectl describe svc fe
+   46  curl raham.com/welcome
+   47  curl raham.com
+   48  kubectl delete po,svc --all
+   49  vim deamonset.yml
+   50  kubectl apply -f deamonset.yml
+   51  kubectl get po -0 wide
+   52  kubectl get po -o wide
+   53  cat deamonset.yml
+   54  yum install docker -y
+   55  systemctl start docker
+   56  systemctl status docker
+   57  lsblk
+   58  df -Th
+   59  cd /
+   60  du -sh
+   61  docker pull amazonlinux2
+   62  docker pull amazonlinux2
+   63  systemctl start docker
+   64  systemctl status docker
+   65  cd
+   66  docker pull amazonlinux:latest
+   67  docker images
+   68  docker run -itd --name cont1 amazonlinux:latest
+   69  docker inspect cont1
+   70  docker run -itd --name cont2 --cpus="0.5" amazonlinux:latest
+   71  docker inspect cont2
+   72  docker run -itd --name cont3 --cpus="0.6" amazonlinux:latest
+   73  docker run -itd --name cont4 --cpus="0.7" amazonlinux:latest
+   74  docker inspect cont4 | grep -i nanocpus
+   75  docker run -itd --name cont5 --memory="512mb" amazonlinux:latest
+   76  docker inspect cont5
+   77  docker run -itd --name cont raham --cpus="0.6" --memory="512mb" amazonlinux:latest
+   78  docker run -itd --name  raham --cpus="0.6" --memory="512mb" amazonlinux:latest
+   79  docker inspect raham
+   80  docker stats
+   81  docker stats --format "table {{.Container}}\t{{.MemUsage}}"
+   82  history
