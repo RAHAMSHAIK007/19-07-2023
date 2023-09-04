@@ -1,0 +1,50 @@
+  1  aws configure
+    2  aws s3 ls
+    3  aws s3 ls
+    4  aws s3 mb s3://rahamshaik007bucket
+    5  aws s3 ls
+    6  aws s3 ls s3://rahamshaik007bucket
+    7  aws s3 mb s3://rahamshaik008bucket
+    8  aws s3 ls
+    9  aws s3 rb s3://rahamshaik008bucket
+   10  ll
+   11  aws s3 cp s3://rahamshaik007bucket/prom.txt .
+   12  ll
+   13  aws s3 cp s3://rahamshaik007bucket/ansible.txt .
+   14  ll
+   15  cat ansible.txt
+   16  ll
+   17  vim raham.txt
+   18  aws s3 cp raham.txt s3://rahamshaik007bucket
+   19  aws s3 mb s3://rahamshaik008bucket
+   20  aws s3 sync s3://rahamshaik007bucket s3://rahamshaik008bucket
+   21  aws s3api put-bucket-versioning --bucket s3://rahamshaik008bucket --versioning-configuration status=Enabled
+   22  aws s3api put-bucket-versioning --name s3://rahamshaik008bucket --versioning-configuration status=Enabled
+   23  aws s3api put-bucket-versioning --name rahamshaik008bucket --versioning-configuration status=Enabled
+   24  aws s3api put-bucket-versioning --bucket rahamshaik008bucket --versioning-configuration status=Enabled
+   25  aws s3api put-bucket-versioning --bucket rahamshaik008bucket --versioning-configuration Status=Enabled
+   26  aws s3api put-bucket-versioning --bucket rahamshaik008bucket --versioning-configuration Status=Suspend
+   27  aws s3api put-bucket-versioning --bucket rahamshaik008bucket --versioning-configuration Status=Suspended
+   28  aws s3api put-bucket-versioning --bucket rahamshaik008bucket --versioning-configuration Status=Enabled
+   29  aws ec2 describe-instances
+   30  aws ec2 describe-instances-status
+   31  aws ec2 describe-instances --output table
+   32  aws ec2 describe-instances --output json
+   33  aws ec2 describe-instances --output yaml
+   34  aws ec2 describe-instances --output text
+   35  aws ec2 describe-instances
+   36  aws ec2 describe-instances --instance-ids "i-0d0459adabc5f92cf"
+   37  aws ec2 stop-instances --instance-ids "i-0d0459adabc5f92cf"
+   38  aws ec2 start-instances --instance-ids "i-0d0459adabc5f92cf"
+   39  aws ec2 terminate-instances --instance-ids "i-0d0459adabc5f92cf"
+   40  aws iam create-user --user-name rahamshaik
+   41  aws iam list-user
+   42  aws iam list-users
+   43  aws iam list-groups
+   44  aws iam create-group --group-name devops0011
+   45  aws iam list-groups
+   46  aws iam delete-group --group-name devops0011
+   47  aws iam list-groups
+   48  aws iam delete-user --user-name rahamshaik
+   49  aws s3 bucket --help
+   50  aws s3 bucket -h
