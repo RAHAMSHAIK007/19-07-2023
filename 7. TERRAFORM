@@ -172,3 +172,137 @@ HISTORY:
    28  terraform destroy --auto-approve
    29  terraform state list
    30  history
+==============================================================================================================
+
+TERRAFORM VARIABLE FILES:
+here we can store our varibles on seperate file.
+
+vim main.tf
+
+provider "aws" {
+region = "ap-southeast-2"
+}
+
+resource "aws_instance" "one" {
+count = var.instance_count
+ami = "ami-0373aa64534d82bf6"
+instance_type = var.instance_type
+}
+
+vim variable.tf
+
+variable "instance_type" {
+description = ""
+type = string
+default = "t2.medium"
+}
+
+
+TFVARS:
+it is used when we have multiple var files
+
+cat main.tf
+provider "aws" {
+region = "ap-southeast-1"
+}
+
+vim main.tf
+
+resource "aws_instance" "raham" {
+ami = "ami-0db1894e055420bc0"
+instance_type = var.instance_type
+tags = {
+Name = "raham-terraserver"
+}
+}
+
+vim variable.tf
+variable "instance_type" {
+
+}
+
+vim raham.tfvars
+instance_type = "t2.micro"
+
+vim variable2.tfvars
+instance_type = "t2.medium"
+
+TERRAFORM CLI:
+used to pass variables dynamically
+
+provider "aws" {
+region = "ap-southeast-1"
+}
+
+resource "aws_instance" "raham" {
+ami = "ami-0db1894e055420bc0"
+instance_type = var.instance_type
+tags = {
+Name = "raham-terraserver"
+}
+}
+
+variable "instance_type" {
+
+}
+
+terraform apply --auto-approve -var="instance_type=t2.medium"
+terraform destroy --auto-approve -var="instance_type=t2.medium"
+
+TERRAFORM OUTPUTS:
+it will show outputs of resource information
+
+provider "aws" {
+region = "ap-southeast-1"
+}
+
+resource "aws_instance" "raham" {
+ami = "ami-0db1894e055420bc0"
+instance_type = "t2.micro"
+tags = {
+Name = "raham-terraserver"
+}
+}
+
+output "raham" {
+value = [aws_instance.raham.public_ip, aws_instance.raham.private_ip, aws_instance.raham.public_dns]
+}
+
+
+
+taint: used to recrarete a specif resource in terraform
+terraform state list
+TAINT: terraform taint aws_instance.raham
+terraform apply --auto-approve
+UNTAINT: terraform untaint aws_instance.raham
+
+provider "aws" {
+region = "ap-southeast-1"
+}
+
+resource "aws_instance" "raham" {
+ami = "ami-0db1894e055420bc0"
+instance_type = "t2.micro"
+tags = {
+Name = "raham-terraserver"
+}
+}
+
+resource "aws_s3_bucket" "abc" {
+bucket = "santosh887766bucket1"
+}
+
+resource "aws_ebs_volume" "xyz" {
+size = 25
+availability_zone = "ap-southeast-1a"
+tags = {
+Name = "raham-ebs"
+}
+}
+
+terraform validate: used to check syntax errors, ignore values
+terraform plan: indentation erros, ignore values
+terraform apply: indentation and syntax erros and values
+terraform fmt: to make terraform files aligned with indentation
+
+
