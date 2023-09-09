@@ -305,4 +305,167 @@ terraform plan: indentation erros, ignore values
 terraform apply: indentation and syntax erros and values
 terraform fmt: to make terraform files aligned with indentation
 
+=================================================================================================
+
+Terrafrom locals:
+used to define value once and use multiple times.
+we can use the value in multiple blocks and resources.
+
+provider "aws" {
+  region = "ap-southeast-1"
+}
+
+locals {
+Name = "prod"
+}
+
+resource "aws_instance" "raham" {
+  ami           = "ami-0db1894e055420bc0"
+  instance_type = "t2.micro"
+  tags = {
+    Name = "${local.Name}-instance"
+  }
+}
+
+resource "aws_s3_bucket" "abc" {
+  bucket = "${local.Name}bucket009988"
+}
+
+
+ex:2
+provider "aws" {
+  region = "ap-southeast-1"
+}
+
+locals {
+  env = "test"
+}
+
+resource "aws_vpc" "one" {
+  cidr_block = "10.0.0.0/24"
+  tags = {
+    Name = "${local.env}-vpc"
+  }
+}
+
+resource "aws_subnet" "two" {
+  cidr_block = "10.0.0.0/24"
+  vpc_id     = aws_vpc.one.id
+  tags = {
+    Name = "${local.env}-subnet"
+  }
+}
+
+resource "aws_instance" "raham" {
+  subnet_id     = aws_subnet.two.id
+  ami           = "ami-0db1894e055420bc0"
+  instance_type = "t2.micro"
+  tags = {
+    Name = "${local.env}-instance"
+  }
+}
+
+=====================================================================
+
+WORKSPACES:
+it is used to create infra for multiple env 
+it will isolate each env
+if we work on dev env it wont affect test env
+the default workspace is default 
+all the resource we create on terraform by default will store on default workspace
+
+terraform workspace list	: to list the workspaces
+terraform workspace new dev	: to create workspace
+terraform workspace show	: to show current workspace
+terraform workspace select dev	: to switch to dev workspace
+terraform workspace delete dev	: to delete dev workspace
+
+
+NOTE:
+1. we need to empty the workspace befor delete
+2. we cant delete current workspace, we can switch and delete
+3. we cant delete default workspace
+
+TERRAFORM GRAPH: to show the flowcart of infra creation.
+usually used to understand the resource linking in real time
+
+website: https://graphviz.christine.website/
+command: terraform graph -- > copy content and paste there
+
+Terraform import: used to import the configuration on resource which is created manually
+
+vim main.tf
+
+provider "aws" {
+  region = "ap-southeast-1"
+}
+
+resource "aws_instance" "one" {
+
+}
+
+terraform import aws_instance.one i-059a814db4f792437
+
+check the state file for the resourec tracking info
+
+HISTORY:
+101  cd terraform/
+  102  ll
+  103  terraform state list
+  104  vim main.tf
+  105  terraform init
+  106  terraform plan
+  107  terraform apply --auto-approve
+  108  vim main.tf
+  109  terraform apply --auto-approve
+  110  terraform destroy --auto-approve
+  111  vim main.tf
+  112  terraform fmt
+  113  terraform apply --auto-approve
+  114  vim main.tf
+  115  terraform apply --auto-approve
+  116  vim main.tf
+  117  terraform apply --auto-approve
+  118  vim main.tf
+  119  terraform workspace list
+  120  terraform destroy --auto-approve
+  121  terraform workspace new dev
+  122  terraform workspace show
+  123  terraform workspace list
+  124  ll
+  125  vim main.tf
+  126  terraform apply --auto-approve
+  127  terraform workspace new test
+  128  terraform apply --auto-approve
+  129  terraform workspace new prod
+  130  terraform apply --auto-approve
+  131  terraform workspace delete dev
+  132  terraform workspace select dev
+  133  terraform destroy --auto-approve
+  134  terraform workspace delete dev
+  135  terraform workspace select test
+  136  terraform workspace delete dev
+  137  terraform destroy --auto-approve
+  138  terraform workspace select prod
+  139  terraform workspace delete test
+  140  terraform destroy --auto-approve
+  141  terraform workspace select default
+  142  terraform workspace delete prod
+  143  terraform workspace list
+  144  terraform workspace delete default
+  145  terraform workspace
+  146  terraform apply --auto-approve
+  147  terraform state list
+  148  terraform graph
+  149  terraform destroy --auto-approve
+  150  ll
+  151  cat terraform.tfstate
+  152  vim main.tf
+  153  cat main.tf
+  154  terraform import aws_instance.one --instance-id i-059a814db4f792437
+  155  terraform import aws_instance.one i-059a814db4f792437
+  156  cat main.tf
+  157  cat terraform.tfstate
+  158  history
+
 
