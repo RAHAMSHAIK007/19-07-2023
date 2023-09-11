@@ -468,4 +468,231 @@ HISTORY:
   157  cat terraform.tfstate
   158  history
 
+================================================================================
+
+Alias & Providers: to create resources on multiple regions at same time.
+here we can use one main.tf to do it.
+
+provider "aws" {
+  region = "ap-southeast-1"
+}
+
+resource "aws_instance" "one" {
+ami = "ami-0db1894e055420bc0"
+instance_type = "t2.micro"
+tags = {
+Name = "singapore"
+}
+}
+
+provider "aws" {
+  region = "eu-west-3"
+  alias = "paris"
+}
+
+resource "aws_instance" "two" {
+provider = aws.paris
+ami = "ami-02bbe13b2401b91f9"
+instance_type = "t2.micro"
+tags = {
+Name = "paris"
+}
+
+LOCAL RESOURCE:
+
+provider "aws" {
+  region = "ap-southeast-1"
+}
+
+resource "local_file" "one" {
+filename = "/root/raham.txt"
+content = "hai all my name is raham"
+}
+
+TERRAFORM VERSION CONSTRAINTS:
+used to change the terraform provider versions.
+
+provider "aws" {
+  region = "ap-southeast-1"
+}
+
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "5.15.0"
+    }
+  }
+}
+
+operator: <,>, =
+
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = ">5.12.0,<5.15.0"
+    }
+  }
+}
+
+
+GITHUB:
+
+provider "github" {
+token = ""
+owner = ""
+}
+
+resource "github_repository" "example" {
+  name        = "example"
+  description = "My awesome codebase"
+
+  visibility = "public"
+
+}
+
+
+=====================================================================
+
+TERRAFORM LOOPS:
+
+provider "aws" {
+}
+
+resource "aws_iam_user" "one" {
+count = length(var.iam_users)
+name = var.iam_users[count.index]
+}
+
+variable "iam_users" {
+description = ""
+type = list(string)
+default = ["user1", "user2", "user3", "user3"]
+}
+
+FOR EACH: used to remove duplicate values and it will work with set/map (string)
+
+provider "aws" {
+}
+
+resource "aws_iam_user" "one" {
+for_each = var.iam_users
+name = each.value
+}
+
+variable "iam_users" {
+description = ""
+type = set(string)
+default = ["user1", "user2", "user3", "user3"]
+}
+
+====================================================================================
+
+TERRAFORM LIFECYCLE:
+PREVENY DESTROY: to prevent the action destroy.
+it will not destroy my resource even if i gave destroy command
+
+
+provider "aws" {
+  region = "ap-southeast-1"
+}
+
+resource "aws_instance" "one" {
+ami = "ami-0db1894e055420bc0"
+instance_type = "t2.micro"
+tags = {
+Name = "singapore"
+}
+lifecycle {
+prevent_destroy = true
+}
+}
+
+
+provider "aws" {
+  region = "ap-southeast-1"
+}
+
+resource "aws_instance" "one" {
+ami = "ami-0db1894e055420bc0"
+instance_type = "t2.micro"
+tags = {
+Name = "singapore"
+}
+lifecycle {
+prevent_destroy = false
+}
+}
+
+
+HISTORY:
+
+159  2023-09-11 03:48:49 ll
+  160  2023-09-11 03:48:54 cd terraform/
+  161  2023-09-11 03:49:30 vim main.tf
+  162  2023-09-11 03:54:43 terraform init
+  163  2023-09-11 03:54:59 ll
+  164  2023-09-11 03:55:06 vim main.tf
+  165  2023-09-11 03:55:20 terraform init
+  166  2023-09-11 03:55:32 terraform plan
+  167  2023-09-11 03:56:08 terraform apply --auto-approve
+  168  2023-09-11 03:57:36 terraform destroy --auto-approve
+  169  2023-09-11 03:59:35 vim main.tf
+  170  2023-09-11 04:00:22 terraform init
+  171  2023-09-11 04:01:01 vim main.tf
+  172  2023-09-11 04:02:53 terraform init
+  173  2023-09-11 04:03:25 terraform plan
+  174  2023-09-11 04:03:35 terraform apply --auto-approve
+  175  2023-09-11 04:03:46 ll
+  176  2023-09-11 04:04:06 ll /root/
+  177  2023-09-11 04:04:50 terraform destroy --auto-approve
+  178  2023-09-11 04:05:13 ll
+  179  2023-09-11 04:05:31 vim main.tf
+  180  2023-09-11 04:07:16 terraform init
+  181  2023-09-11 04:07:35 terraform init -upgrade
+  182  2023-09-11 04:07:55 vim main.tf
+  183  2023-09-11 04:08:10 terraform init -upgrade
+  184  2023-09-11 04:08:20 vim main.tf
+  185  2023-09-11 04:08:58 terraform init -upgrade
+  186  2023-09-11 04:09:08 vim main.tf
+  187  2023-09-11 04:09:16 terraform init -upgrade
+  188  2023-09-11 04:09:26 vim main.tf
+  189  2023-09-11 04:10:14 terraform init -upgrade
+  190  2023-09-11 04:10:34 vim main.tf
+  191  2023-09-11 04:12:06 terraform init -upgrade
+  192  2023-09-11 04:12:37 vim main.tf
+  193  2023-09-11 04:13:04 terraform init -upgrade
+  194  2023-09-11 04:18:18 vim main.tf
+  195  2023-09-11 04:19:36 terraform init -upgrade
+  196  2023-09-11 04:19:52 vi main.tf
+  197  2023-09-11 04:19:59 terraform init -upgrade
+  198  2023-09-11 04:20:06 terraform plan
+  199  2023-09-11 04:20:14 terraform apply --auto-approve
+  200  2023-09-11 04:21:05 vim main.tf
+  201  2023-09-11 04:22:16 terraform apply --auto-approve
+  202  2023-09-11 04:26:21 vim main.tf
+  203  2023-09-11 04:26:59 terraform apply --auto-approve
+  204  2023-09-11 04:29:18 terraform destroy --auto-approve
+  205  2023-09-11 04:30:04 terraform apply --auto-approve
+  206  2023-09-11 04:30:07 terraform destroy --auto-approve
+  207  2023-09-11 04:30:22 vim main.tf
+  208  2023-09-11 04:31:58 terraform init
+  209  2023-09-11 04:32:07 terraform apply --auto-approve
+  210  2023-09-11 04:33:00 terraform destroy --auto-approve
+  211  2023-09-11 04:33:16 vim main.tf
+  212  2023-09-11 04:37:29 terraform apply --auto-approve
+  213  2023-09-11 04:38:04 vim main.tf
+  214  2023-09-11 04:38:22 terraform apply --auto-approve
+  215  2023-09-11 04:38:39 terraform destroy --auto-approve
+  216  2023-09-11 04:39:07 vim main.tf
+  217  2023-09-11 04:40:10 terraform destroy --auto-approve
+  218  2023-09-11 04:40:18 terraform apply --auto-approve
+  219  2023-09-11 04:40:40 vim main.tf
+  220  2023-09-11 04:45:59 terraform apply --auto-approve
+  221  2023-09-11 04:47:03 terraform destroy --auto-approve
+  222  2023-09-11 04:47:44 vim main.tf
+  223  2023-09-11 04:48:02 terraform destroy --auto-approve
+  224  2023-09-11 04:52:27 export HISTTIMEFORMAT="%F %T "
+  225  2023-09-11 04:52:37 history
 
