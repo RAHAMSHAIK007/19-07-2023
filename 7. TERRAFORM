@@ -696,3 +696,202 @@ HISTORY:
   224  2023-09-11 04:52:27 export HISTTIMEFORMAT="%F %T "
   225  2023-09-11 04:52:37 history
 
+===========================================================================================================
+
+TERRAFORM S3 BACKEND SETUP:
+use to store the state file on remote location like s3.
+will have a backup protection by using this.
+changes will be replicated to the state file if we perform action.
+
+
+
+provider "aws" {
+  region = "ap-southeast-1"
+}
+
+terraform {
+  backend "s3" {
+    bucket = "terrastatebucket007"
+    key    = "siwggy"
+    region = "ap-southeast-1"
+  }
+}
+
+resource "aws_instance" "one" {
+ami = "ami-0db1894e055420bc0"
+instance_type = "t2.micro"
+key_name = "1045ambatch"
+availability_zone = "ap-southeast-1a"
+tags = {
+Name = "singapore"
+}
+  
+create a bucket  terrastatebucket007  
+terraform init -upgrade
+
+when u remove backend code run below command
+
+terraform init -migrate-state
+terraform init -reconfigure
+================================================================
+
+DYNAMIC BLOCK: it is used to reduce the length of code and used for reusabilty of code in loop.
+
+provider "aws" {
+}
+
+locals {
+  ingress_rules = [{
+    port        = 443
+    description = "Ingress rules for port 443"
+    },
+    {
+      port        = 80
+      description = "Ingree rules for port 80"
+  },
+  {
+      port        = 8080
+      description = "Ingree rules for port 8080"
+
+  }]
+}
+
+resource "aws_instance" "ec2_example" {
+  ami                    = "ami-0c02fb55956c7d316"
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.main.id]
+  tags = {
+    Name = "Terraform EC2"
+  }
+}
+
+resource "aws_security_group" "main" {
+
+  egress = [
+    {
+      cidr_blocks      = ["0.0.0.0/0"]
+      description      = "*"
+      from_port        = 0
+      ipv6_cidr_blocks = []
+      prefix_list_ids  = []
+      protocol         = "-1"
+      security_groups  = []
+      self             = false
+      to_port          = 0
+  }]
+
+  dynamic "ingress" {
+    for_each = local.ingress_rules
+
+    content {
+      description = "*"
+      from_port   = ingress.value.port
+      to_port     = ingress.value.port
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
+
+  tags = {
+    Name = "terra sg"
+  }
+}
+
+
+
+FOR_EACH:
+
+provider "aws" {
+}
+
+resource "aws_instance" "two" {
+for_each = toset(["web-server", "app-server", "db-server"])
+ami = "ami-04beabd6a4fb6ab6f"
+instance_type = "t2.micro"
+tags = {
+Name = "${each.key}"
+}
+}
+
+
+
+provider "aws" {
+}
+
+resource "aws_instance" "ec2_example" {
+  ami                    = "ami-0c02fb55956c7d316"
+  instance_type          = "t2.micro"
+  key_name               = "shammu"
+  availability_zone      = "ap-southeast-1a"
+  tags = {
+    Name = "webserver"
+  }
+}
+
+resource "aws_instance" "ec2_example" {
+  ami                    = "ami-0c02fb55956c7d316"
+  instance_type          = "t2.micro"
+  key_name               = "shammu"
+  availability_zone      = "ap-southeast-1a"
+  tags = {
+    Name = "appserver"
+  }
+}
+
+resource "aws_instance" "ec2_example" {
+  ami                    = "ami-0c02fb55956c7d316"
+  instance_type          = "t2.micro"
+  key_name               = "shammu"
+  availability_zone      = "ap-southeast-1a"
+  tags = {
+    Name = "dbserver"
+  }
+}
+
+HISTORY:
+  226  cd terraform/
+  227  terraform state list
+  228  vim main.tf
+  229  terraform init -upgrade
+  230  terraform plan
+  231  terraform apply --auto-approve
+  232  vim main.tf
+  233  terraform apply --auto-approve
+  234  ll
+  235  cat terraform.tfstate
+  236  cat terraform.tfstate.backup
+  237  vim main.tf
+  238  terraform apply --auto-approve
+  239  terraform destroy --auto-approve
+  240  vim main.tf
+  241  terraform apply --auto-approve
+  242  terraform init -reconfigure
+  243  terraform init -migrate-state
+  244  terraform apply --auto-approve
+  245  vim main.tf
+  246  terraform apply --auto-approve
+  247  vim main.tf
+  248  terraform fmt
+  249  vim main.tf
+  250  terraform fmt
+  251  terraform apply --auto-approve
+  252  terraform destroy --auto-approve
+  253  vim main.tf
+  254  terraform apply --auto-approve
+  255  vim  main.tf
+  256  terraform apply --auto-approve
+  257  terraform destroy --auto-approve
+  258  vim main.tf
+  259  terraform apply --auto-approve
+  260  vim main.tf
+  261  terraform apply --auto-approve
+  262  vim main.tf
+  263  terraform apply --auto-approve
+  264  vim main.tf
+  265  terraform apply --auto-approve
+  266  vim main.tf
+  267  terraform apply --auto-approve
+  268  vim main.tf
+  269  terraform apply --auto-approve
+  270  vim main.tf
+  271  history
